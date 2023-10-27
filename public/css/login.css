@@ -1,0 +1,58 @@
+body {
+    /* background: #005815!important;
+    background: -webkit-linear-gradient(0deg, #005815 0%, #28a745 100%)!important;
+    background: linear-gradient(0deg, #005815 0%, #28a745 100%)!important; */
+
+    /* background: #ffffff!important;
+    background: -webkit-linear-gradient(0deg, #ffffff 0%, #28a745 100%)!important;
+    background: linear-gradient(0deg, #ffffff 0%, #28a745 100%)!important; */
+
+    /* background: rgb(40, 167, 69) !important; */
+    /* background: linear-gradient(180deg, rgba(40, 167, 69, 1) 16%, rgba(255, 255, 255, 1) 100%, rgba(255, 255, 255, 1) 100%) !important; */
+
+
+    background: rgb(255,255,255)!important;
+    background: linear-gradient(180deg, rgba(255,255,255,1) 16%, rgba(40,167,69,1) 100%, rgba(40,167,69,1) 100%)!important;
+
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    /* background:rgb(108, 199, 108)!important; */
+}
+
+.login-box {
+    margin-top: -50px !important;
+    border: solid 3px white;
+    height: auto;
+    box-shadow: -20px 19px 11px -7px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -20px 19px 11px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: -20px 19px 11px -7px rgba(0,0,0,0.75);
+}
+
+.card {
+    margin-bottom: 0px;
+}
+
+.login-card-body {
+    color: white;
+    background: white;
+}
+
+.input-group-text {
+    color: white !important;
+}
+
+.login-logo {
+    margin-bottom: 0px;
+    background: white;
+}
+
+.login-logo a {
+    color: white;
+}
+
+.login-logo img {
+    height: 150px;
+    width: 90%;
+    max-width: 100%;
+}
