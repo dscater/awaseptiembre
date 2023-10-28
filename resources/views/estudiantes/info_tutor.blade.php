@@ -48,14 +48,10 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                @if ($estudiante->user_tutor)
                                 <div class="col-md-12">
                                     <h4>Tutor</h4>
                                     <table class="table table-bordered">
                                         <tbody>
-                                            <tr>
-                                                <td><strong>Usuario: </strong>{{ $estudiante->user_tutor->name }}</td>
-                                            </tr>
                                             <tr>
                                                 <td><strong>Nombre: </strong>{{ $estudiante->full_name_tutor }}</td>
                                             </tr>
@@ -65,29 +61,24 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                @endif
-                                @if ($estudiante->user_madre)
-                                    <div class="col-md-12">
-                                        <h4>Madre</h4>
-                                        <table class="table table-bordered">
-                                            <tbody>
-                                                <tr>
-                                                    <td><strong>Usuario: </strong>{{ $estudiante->user_madre->name }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Nombre: </strong>{{ $estudiante->full_name_madre }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>C.I.: </strong>{{ $estudiante->ci_madre }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                @endif
+                                <div class="col-md-12">
+                                    <h4>Madre</h4>
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Nombre: </strong>{{ $estudiante->full_name_madre }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>C.I.: </strong>{{ $estudiante->ci_madre }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="{{route("estudiantes.index")}}" class="btn btn-default"><i class="fa fa-arrow-left"></i> Estudiantes</a>
+                                    <a href="{{ route('estudiantes.index') }}" class="btn btn-default"><i
+                                            class="fa fa-arrow-left"></i> Estudiantes</a>
                                 </div>
                             </div>
                         </div>

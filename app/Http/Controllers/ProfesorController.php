@@ -26,67 +26,6 @@ class ProfesorController extends Controller
         return view('profesors.index', compact('usuarios'));
     }
 
-    public function asistencias(Profesor $profesor, Request $request)
-    {
-
-        if ($request->ajax()) {
-            $mes = $request->mes;
-            $anio = $request->anio;
-            $fecha = $anio . '-' . $mes . '-01';
-            $array_dias = ['D', 'L', 'M', 'M', 'J', 'V', "S"];
-
-            $dias = date('t', \strtotime($fecha));
-
-            $header = '';
-            $dias_html = '<tr>';
-            for ($i = 1; $i <= $dias; $i++) {
-                $nro_dia = $i;
-                if ($nro_dia < 10) {
-                    $nro_dia = '0' . $nro_dia;
-                }
-                $fecha_dia = $anio . '-' . $mes . '-' . $nro_dia;
-                $txt_dia = date('w', strtotime($fecha_dia));
-
-                $header .= '<th>' . $i . '<br>' . $array_dias[$txt_dia] . '</th>';
-                if ($i < 10) {
-                    $fecha = $anio . '-' . $mes . '-0' . $i;
-                } else {
-                    $fecha = $anio . '-' . $mes . '-' . $i;
-                }
-
-                $asistencia = Asistencia::where('user_id', $profesor->user->id)
-                    ->where('fecha', $fecha)->get()->first();
-                if ($asistencia) {
-                    $dias_html .= '<td><i class="fa fa-check text-success"></i></td>';
-                } else {
-                    $dias_html .= '<td><i class="fa fa-times text-danger"></i></td>';
-                }
-            }
-            $dias_html .= '</tr>';
-
-            return response()->JSON([
-                'sw' => true,
-                'header' => $header,
-                'dias' => $dias_html,
-            ]);
-        }
-
-        $gestion_min = Asistencia::min('fecha');
-        $gestion_max = Asistencia::max('fecha');
-        $gestion_min = date('Y', strtotime($gestion_min));
-        $gestion_max = date('Y', strtotime($gestion_max));
-
-        $array_gestiones = [];
-        if ($gestion_min) {
-            $array_gestiones[''] = 'Seleccione...';
-            for ($i = (int)$gestion_min; $i <= (int)$gestion_max; $i++) {
-                $array_gestiones[$i] = $i;
-            }
-        }
-
-        return view('profesors.asistencias', compact('profesor', 'array_gestiones'));
-    }
-
     public function create()
     {
         return view('profesors.create');
@@ -218,7 +157,7 @@ class ProfesorController extends Controller
             $extension = "." . $file_foto->getClientOriginalExtension();
             $nom_foto = $usuario->nombre . time() . $extension;
             $file_foto->move(public_path() . "/imgs/users/", $nom_foto);
-            $usuario->user->foto = $usuario->foto;
+            $usuario->user->foto = $nom_foto;
             $usuario->foto = $nom_foto;
         }
 
@@ -282,10 +221,6 @@ class ProfesorController extends Controller
     public function show(Profesor $usuario)
     {
         return 'mostrar usuario';
-    }
-
-    public function formulario(Profesor $profesor){
-
     }
 
     public function destroy(Profesor $usuario)

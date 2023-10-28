@@ -165,7 +165,10 @@ class AdministrativoController extends Controller
         if ($request->tipo != 'NINGUNO') {
             if ($usuario->user) {
                 $usuario->user->tipo = $request->tipo;
+                $usuario->foto = $usuario->foto;
+                $usuario->user->foto = $usuario->foto;
                 $usuario->user->save();
+                $usuario->save();
             } else {
                 // si se le asigna un usuario y no tiene crear uno  nuevo
                 $nombre_administrativo = UserController::nombreUsuario($request->nombre, $request->paterno, $request->materno);
@@ -187,15 +190,19 @@ class AdministrativoController extends Controller
                 $nuevo_usuario->password = Hash::make($request->ci);
                 $nuevo_usuario->tipo = $request->tipo;
                 $nuevo_usuario->foto = $usuario->foto;
+                $nuevo_usuario->user->foto = $usuario->foto;
                 $nuevo_usuario->codigo = $nro_codigo;
                 $nuevo_usuario->estado = 1;
                 $nuevo_usuario->save();
                 $usuario->user_id = $nuevo_usuario->id;
                 $usuario->save();
+                $usuario->user->save();
             }
         } else {
             if ($usuario->user) {
                 // si tiene un usuario, pero se le puso NINGUNO eliminarlo
+                $usuario->foto = $usuario->foto;
+                $usuario->user->foto = $usuario->foto;
                 $usuario->user_id = null;
                 $usuario->save();
                 $usuario->user->delete();

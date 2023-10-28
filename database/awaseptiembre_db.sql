@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 27-10-2023 a las 16:07:23
+-- Tiempo de generación: 28-10-2023 a las 04:05:04
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 7.4.19
 
@@ -96,7 +96,7 @@ CREATE TABLE `administrativos` (
 --
 
 INSERT INTO `administrativos` (`id`, `nombre`, `paterno`, `materno`, `ci`, `ci_exp`, `lugar_nac`, `fecha_nac`, `edad`, `sexo`, `estado_civil`, `zona`, `avenida`, `nro`, `fono`, `cel`, `email`, `nro_rda`, `afp`, `nua`, `item_fiscal`, `nro_seguro_social`, `caja_seguro_social`, `titulado`, `gestiones_trabajo`, `cargo`, `mes`, `observaciones`, `foto`, `fecha_registro`, `user_id`, `estado`, `created_at`, `updated_at`) VALUES
-(1, 'PABLO', 'PACHECO', 'FLORES', '1023030', 'LP', 'LA PAZ', '1988-09-12', 35, 'M', '345', 'ZONA CENTRAL', 'LITORAL', '234', '2881547', '76544875', '', '8485', '456', '567', '567', '4563223', 'CNS', '1RA FASE', '2015', 'DIRECCIÓN ACADÉMICA', 'ENERO', '', 'PABLO1695255530.jpg', '2023-09-20', 2, 1, '2023-09-21 00:18:51', '2023-09-21 00:18:51'),
+(1, 'PABLO', 'PACHECO', 'FLORES', '1023030', 'LP', 'LA PAZ', '1988-09-12', 35, 'M', '345', 'ZONA CENTRAL', 'LITORAL', '234', '2881547', '76544875', '', '8485', '456', '567', '567', '4563223', 'CNS', '1RA FASE', '2015', 'DIRECCIÓN ACADÉMICA', 'ENERO', '', 'PABLO1698455602.png', '2023-10-27', 2, 1, '2023-09-21 00:18:51', '2023-10-28 01:13:22'),
 (2, 'FELIPE', 'PERES', '', '213123', 'LP', 'LA PAZ', '1995-01-01', 28, 'M', 'SOLTERO', 'LOS OLIVOS', 'AV. 3', '1', '', '777777', '', '111', '11', '222', '333', '444', 'SEGURO', '1RA FASE', '', '', '', '', 'user_default.png', '2023-09-21', NULL, 1, '2023-09-21 13:31:09', '2023-09-21 13:31:09');
 
 -- --------------------------------------------------------
@@ -121,9 +121,9 @@ CREATE TABLE `administrativo_cursos` (
 --
 
 INSERT INTO `administrativo_cursos` (`id`, `administrativo_id`, `nominacion`, `institucion`, `duracion`, `fecha`, `created_at`, `updated_at`) VALUES
-(1, 1, '', '', '', '0000-00-00', '2023-09-21 00:18:52', '2023-09-21 00:18:52'),
-(2, 1, '', '', '', '0000-00-00', '2023-09-21 00:18:52', '2023-09-21 00:18:52'),
-(3, 1, '', '', '', '0000-00-00', '2023-09-21 00:18:52', '2023-09-21 00:18:52'),
+(1, 1, '', '', '', '0000-00-00', '2023-09-21 00:18:52', '2023-10-28 01:33:02'),
+(2, 1, '', '', '', '0000-00-00', '2023-09-21 00:18:52', '2023-10-28 01:33:02'),
+(3, 1, '', '', '', '0000-00-00', '2023-09-21 00:18:52', '2023-10-28 01:33:03'),
 (4, 2, '', '', '', '0000-00-00', '2023-09-21 13:31:09', '2023-09-21 13:31:33'),
 (5, 2, '', '', '', '0000-00-00', '2023-09-21 13:31:09', '2023-09-21 13:31:33'),
 (6, 2, '', '', '', '0000-00-00', '2023-09-21 13:31:09', '2023-09-21 13:31:33');
@@ -151,11 +151,11 @@ CREATE TABLE `administrativo_estudios` (
 --
 
 INSERT INTO `administrativo_estudios` (`id`, `administrativo_id`, `nivel`, `institucion`, `anio_egreso`, `especialidad`, `nro_titulo`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Secundario', 'UE MEJILLONES', '2002', 'UMANIDADES', '45344', '2023-09-21 00:18:51', '2023-09-21 00:18:51'),
-(2, 1, 'Normal', '', '', '', '', '2023-09-21 00:18:51', '2023-09-21 00:18:51'),
-(3, 1, 'Universitario', '', '', '', '', '2023-09-21 00:18:52', '2023-09-21 00:18:52'),
-(4, 1, 'Post Grado', '', '', '', '', '2023-09-21 00:18:52', '2023-09-21 00:18:52'),
-(5, 1, 'Post Grado', '', '', '', '', '2023-09-21 00:18:52', '2023-09-21 00:18:52'),
+(1, 1, 'SECUNDARIO', 'UE MEJILLONES', '2002', 'UMANIDADES', '45344', '2023-09-21 00:18:51', '2023-10-28 01:09:43'),
+(2, 1, 'NORMAL', '', '', '', '', '2023-09-21 00:18:51', '2023-10-28 01:09:43'),
+(3, 1, 'UNIVERSITARIO', '', '', '', '', '2023-09-21 00:18:52', '2023-10-28 01:09:43'),
+(4, 1, 'POST GRADO', '', '', '', '', '2023-09-21 00:18:52', '2023-10-28 01:09:43'),
+(5, 1, 'POST GRADO', '', '', '', '', '2023-09-21 00:18:52', '2023-10-28 01:09:43'),
 (6, 2, 'SECUNDARIO', '', '', '', '', '2023-09-21 13:31:09', '2023-09-21 13:31:33'),
 (7, 2, 'NORMAL', '', '', '', '', '2023-09-21 13:31:09', '2023-09-21 13:31:33'),
 (8, 2, 'UNIVERSITARIO', '', '', '', '', '2023-09-21 13:31:09', '2023-09-21 13:31:33'),
@@ -264,8 +264,8 @@ CREATE TABLE `calificacions` (
   `id` bigint UNSIGNED NOT NULL,
   `inscripcion_id` bigint UNSIGNED NOT NULL,
   `materia_id` bigint UNSIGNED NOT NULL,
-  `nota_final` double(8,2) NOT NULL,
-  `estado` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ponderacion` double(8,2) NOT NULL,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `fecha_registro` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -294,6 +294,71 @@ INSERT INTO `campos` (`id`, `nombre`, `descripcion`, `created_at`, `updated_at`)
 (2, 'COMUNIDAD Y SOCIEDAD', '', '2023-05-11 20:13:29', '2023-05-11 20:13:29'),
 (3, 'COSMOS Y PENSAMIENTO', '', '2023-05-11 20:13:29', '2023-05-11 20:13:29'),
 (4, 'CIENCIA TECNOLOGÍA Y PRODUCCIÓN', '', '2023-05-11 20:13:29', '2023-05-11 20:13:29');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `comunicados`
+--
+
+CREATE TABLE `comunicados` (
+  `id` bigint UNSIGNED NOT NULL,
+  `nivel` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `grado_id` bigint UNSIGNED NOT NULL,
+  `materia_id` bigint UNSIGNED NOT NULL,
+  `paralelo_id` bigint UNSIGNED NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `estado` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_registro` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `entregas`
+--
+
+CREATE TABLE `entregas` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `inscripcion_id` bigint UNSIGNED NOT NULL,
+  `materia_id` bigint UNSIGNED NOT NULL,
+  `tarea_id` bigint UNSIGNED NOT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `fecha_entrega` date DEFAULT NULL,
+  `calificacion` double(8,2) DEFAULT NULL,
+  `estado` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `enviado` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_registro` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `entregas`
+--
+
+INSERT INTO `entregas` (`id`, `user_id`, `inscripcion_id`, `materia_id`, `tarea_id`, `observaciones`, `fecha_entrega`, `calificacion`, `estado`, `enviado`, `fecha_registro`, `created_at`, `updated_at`) VALUES
+(1, 3, 1, 2, 1, NULL, NULL, NULL, 'SIN ENTREGAR', 'NO', '2023-10-28', '2023-10-28 04:01:37', '2023-10-28 04:01:37'),
+(2, 12, 2, 2, 1, NULL, NULL, NULL, 'SIN ENTREGAR', 'NO', '2023-10-28', '2023-10-28 04:01:37', '2023-10-28 04:01:37');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `entrega_archivos`
+--
+
+CREATE TABLE `entrega_archivos` (
+  `id` bigint UNSIGNED NOT NULL,
+  `entrega_id` bigint UNSIGNED NOT NULL,
+  `link` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -377,9 +442,47 @@ CREATE TABLE `estudiantes` (
 --
 
 INSERT INTO `estudiantes` (`id`, `nombre`, `paterno`, `materno`, `tipo_doc`, `nro_doc`, `ci_exp`, `pais_nac`, `dpto_nac`, `provincia_nac`, `localidad_nac`, `fecha_nac`, `sexo`, `oficialia`, `libro`, `partida`, `folio`, `ue_procedencia`, `codigo_sie_ue`, `provincia_dir`, `zona_dir`, `municipio_dir`, `avenida_dir`, `localidad_dir`, `fono_dir`, `nro_dir`, `idioma_niniez`, `idiomas_estudiante`, `pueblo_nacion`, `pueblo_nacion_otro`, `centro_salud`, `veces_centro_salud`, `discapacidad`, `discapacidad_otro`, `desc_discapacidad`, `agua`, `energia_electrica`, `banio`, `actividad`, `dias_trabajo`, `recibio_pago`, `internet`, `frecuencia_internet`, `llega`, `llega_otro`, `desc_llega`, `ci_padre_tutor`, `app_padre_tutor`, `apm_padre_tutor`, `nom_padre_tutor`, `idioma_padre_tutor`, `ocupacion_padre_tutor`, `grado_padre_tutor`, `parentezco_padre_tutor`, `ci_madre`, `app_madre`, `apm_madre`, `nom_madre`, `idioma_madre`, `ocupacion_madre`, `grado_madre`, `lugar`, `foto`, `fecha_registro`, `user_id`, `estado`, `created_at`, `updated_at`) VALUES
-(1, 'DANIEL', 'PAREDES', 'CONDE', 'CI', '405060', 'LP', 'LA PAZ', 'LA PAZ', 'MURILLO', 'LA PAZ', '2004-08-15', 'M', '234', '34', '345', '45', 'UNIDAD EDUCATIVA MARISCAL SANTA CRUZ', '234235234', 'MURILLO', 'ZONA NORTE', 'LA PAZ', 'CALLE 4', 'LA PAZ', '76544875', '868', 'CASTELLANO', 'CASTELLANO', 'NO PERTENECE', '', 'SI', '1 A 2 VECES', '', '', '', 'CAÑERÍA DE RED', 'SI', 'ALCANTARILLADO', 'NO TRABAJÓ', '5', 'NO', 'SU DOMICILIO', 'DIARIAMENTE', 'A PIE', '', 'MENOS DE MEDIA HORA', '708090', 'PAREDES', 'TAPIA', 'RICARDO', 'CASTELLANO', 'PROFESOR', 'LICENCIATURA', 'PADRE', '908070', 'CONDE', 'SUAREZ', 'MARTHA', 'CASTELLANO', 'LABORES DE HOGAR', 'SECUNDARIA', '', 'CONDE1695255877.jpg', '2023-09-20', 3, 1, '2023-09-21 00:24:38', '2023-09-21 01:53:08'),
+(1, 'DANIEL', 'PAREDES', 'CONDE', 'CI', '405060', 'LP', 'LA PAZ', 'LA PAZ', 'MURILLO', 'LA PAZ', '2004-08-15', 'M', '234', '34', '345', '45', 'UNIDAD EDUCATIVA MARISCAL SANTA CRUZ', '234235234', 'MURILLO', 'ZONA NORTE', 'LA PAZ', 'CALLE 4', 'LA PAZ', '76544875', '868', 'CASTELLANO', 'CASTELLANO', 'NO PERTENECE', '', 'SI', '1 A 2 VECES', '', '', '', 'CAÑERÍA DE RED', 'SI', 'ALCANTARILLADO', 'NO TRABAJÓ', '5', 'NO', 'SU DOMICILIO', 'DIARIAMENTE', 'A PIE', '', 'MENOS DE MEDIA HORA', '708090', 'PAREDES', 'TAPIA', 'RICARDO', 'CASTELLANO', 'PROFESOR', 'LICENCIATURA', 'PADRE', '908070', 'CONDE', 'SUAREZ', 'MARTHA', 'CASTELLANO', 'LABORES DE HOGAR', 'SECUNDARIA', '', 'DANIEL1698456072.png', '2023-09-20', 3, 1, '2023-09-21 00:24:38', '2023-10-28 01:21:12'),
 (2, 'CARLOS', 'GONZALES', 'MARTINES', 'CI', '12312', 'LP', 'BOLIVIA', 'LA PAZ', 'LAPAZ', 'LA PAZ', '2010-01-21', 'M', '123123', '12', '2112', '1212', '', '', 'LOS OLIVOS', 'ZONA VILLA', 'SECCION 1|', 'AV. 3', 'LOCALIDAD 1', '7777', '32', 'ESPAÑOL', 'ESPAÑOL', 'NO PERTENECE', '', 'SI', '1 A 2 VECES', 'SENSORIAL Y DE LA COMUNICACIÓN', '', '', 'CAÑERÍA DE RED', 'SI', 'ALCANTARILLADO', 'TRABAJÓ EN AGRICULTURA O AGROINDUSTRIA', '', '', 'EN LA UNIDAD EDUCATIVA', 'MÁS DE UNA VEZ A LA SEMANA', 'A PIE', '', 'MENOS DE MEDIA HORA', '3123', 'GONZALES', '', 'MARTIN', 'ESPAÑOL', 'OCUPACION', 'SECUNDARIA', '', '', '', '', '', '', '', '', '', 'CARLOS1695303507.jpg', '2023-09-21', 10, 1, '2023-09-21 13:38:27', '2023-09-21 13:38:27'),
 (3, 'MAMANI', 'VALENTINA', 'MENDOZA', 'CI', '33223', 'LP', 'BOLIVIA', 'LA PAZ', 'LA PAZ', 'LA PAZ', '2006-01-01', 'F', '1212', '12223', '324234', '123123', '', '', 'LOS OLIVOS', 'LA PAZ', 'LA PAZ', 'AV. 33', 'LA PAZ', '777777', '3', 'ESPAÑOL', 'ESPAÑOL', 'NO PERTENECE', '', 'SI', '1 A 2 VECES', '', '', '', 'CAÑERÍA DE RED', 'SI', 'ALCANTARILLADO', 'NO TRABAJÓ', '', '', 'SU DOMICILIO', 'DIARIAMENTE', 'A PIE', '', 'MENOS DE MEDIA HORA', '88888', 'MENDOZA', 'MARTINES', 'PEDRO', 'ESPAÑOL', 'OCUPACION 1', 'GRADO ALCANZADO', 'PADRE', '77777', 'MAMANI', 'MAMANI', 'MARIA', 'ESPAÑOL', 'OCUPACION 2', 'GRADO 2', '', 'MAMANI1695305977.jpg', '2023-09-21', 12, 1, '2023-09-21 14:19:38', '2023-09-21 14:19:38');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `historial_accions`
+--
+
+CREATE TABLE `historial_accions` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `accion` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `datos_original` text COLLATE utf8mb4_unicode_ci,
+  `datos_nuevo` text COLLATE utf8mb4_unicode_ci,
+  `modulo` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha` date NOT NULL,
+  `hora` time NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `historial_accions`
+--
+
+INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `datos_original`, `datos_nuevo`, `modulo`, `fecha`, `hora`, `created_at`, `updated_at`) VALUES
+(2, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UNA TAREA', 'id: 1<br/>materia_id: 2<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESC\r\nSALTO DE LINEA<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:18:23<br/>updated_at: 2023-10-27 23:18:23<br/>', NULL, 'TAREAS', '2023-10-27', '23:18:23', '2023-10-28 03:18:23', '2023-10-28 03:18:23'),
+(3, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESC. TAREA\r\nSALTO DE LINEA<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-11-10<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:21:31<br/>updated_at: 2023-10-27 23:21:31<br/>', NULL, 'TAREAS', '2023-10-27', '23:21:31', '2023-10-28 03:21:31', '2023-10-28 03:21:31'),
+(4, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESC.<br />\r\nSALDO DE LINEA<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:28:24<br/>updated_at: 2023-10-27 23:28:24<br/>', NULL, 'TAREAS', '2023-10-27', '23:28:24', '2023-10-28 03:28:24', '2023-10-28 03:28:24'),
+(5, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESC.<br />\r\nSALTO DE LINEA<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:30:00<br/>updated_at: 2023-10-27 23:30:00<br/>', NULL, 'TAREAS', '2023-10-27', '23:30:00', '2023-10-28 03:30:00', '2023-10-28 03:30:00'),
+(6, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 3<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:33:24<br/>', NULL, 'TAREAS', '2023-10-27', '23:33:24', '2023-10-28 03:33:24', '2023-10-28 03:33:24'),
+(7, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 3<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:33:24<br/>', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 3<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:39:16<br/>', 'TAREAS', '2023-10-27', '23:39:16', '2023-10-28 03:39:16', '2023-10-28 03:39:16'),
+(8, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 3<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:39:16<br/>', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 3<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:43:28<br/>', 'TAREAS', '2023-10-27', '23:43:28', '2023-10-28 03:43:28', '2023-10-28 03:43:28'),
+(9, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 3<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:43:28<br/>', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:43:39<br/>', 'TAREAS', '2023-10-27', '23:43:39', '2023-10-28 03:43:39', '2023-10-28 03:43:39'),
+(10, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:43:39<br/>', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS MODIFICADO<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:43:45<br/>', 'TAREAS', '2023-10-27', '23:43:45', '2023-10-28 03:43:45', '2023-10-28 03:43:45'),
+(11, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS MODIFICADO<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:43:45<br/>', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:43:49<br/>', 'TAREAS', '2023-10-27', '23:43:49', '2023-10-28 03:43:49', '2023-10-28 03:43:49'),
+(14, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...<br/>fecha_asignacion: 2023-10-28<br/>fecha_limite: 2023-10-28<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 00:01:37<br/>updated_at: 2023-10-28 00:01:37<br/>', NULL, 'TAREAS', '2023-10-28', '00:01:37', '2023-10-28 04:01:37', '2023-10-28 04:01:37'),
+(15, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...<br/>fecha_asignacion: 2023-10-28<br/>fecha_limite: 2023-10-28<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 00:01:37<br/>updated_at: 2023-10-28 00:01:37<br/>', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...<br/>fecha_asignacion: 2023-10-28<br/>fecha_limite: 2023-11-11<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 00:01:37<br/>updated_at: 2023-10-28 00:01:43<br/>', 'TAREAS', '2023-10-28', '00:01:43', '2023-10-28 04:01:43', '2023-10-28 04:01:43');
 
 -- --------------------------------------------------------
 
@@ -407,7 +510,7 @@ CREATE TABLE `inscripcions` (
 --
 
 INSERT INTO `inscripcions` (`id`, `estudiante_id`, `nivel`, `grado`, `paralelo_id`, `turno`, `gestion`, `estado`, `status`, `fecha_registro`, `created_at`, `updated_at`) VALUES
-(1, 1, 'SECUNDARIA', '1', 3, 'MAÑANA', 2023, 'REPROBADO', 1, '2023-09-20', '2023-09-21 01:53:27', '2023-09-21 01:53:27'),
+(1, 1, 'SECUNDARIA', '2', 3, 'MAÑANA', 2023, 'REPROBADO', 1, '2023-09-20', '2023-09-21 01:53:27', '2023-10-28 04:03:08'),
 (2, 3, 'SECUNDARIA', '1', 3, 'MAÑANA', 2023, 'REPROBADO', 1, '2023-09-21', '2023-09-21 14:22:04', '2023-09-21 14:22:04');
 
 -- --------------------------------------------------------
@@ -510,6 +613,65 @@ CREATE TABLE `migrations` (
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2023_10_27_132550_create_tareas_table', 1),
+(2, '2023_10_27_132551_create_entregas_table', 2),
+(3, '2023_10_27_133604_create_tarea_archivos_table', 3),
+(4, '2023_10_27_133614_create_entrega_archivos_table', 4),
+(5, '2023_10_27_133633_create_comunicados_table', 5),
+(6, '2023_10_27_133641_create_notificacions_table', 6),
+(7, '2023_10_27_133712_create_notificacion_users_table', 7),
+(8, '2023_08_26_190801_create_historial_accions_table', 8);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `notificacions`
+--
+
+CREATE TABLE `notificacions` (
+  `id` bigint UNSIGNED NOT NULL,
+  `registro_id` bigint UNSIGNED NOT NULL,
+  `modulo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `notificacions`
+--
+
+INSERT INTO `notificacions` (`id`, `registro_id`, `modulo`, `descripcion`, `created_at`, `updated_at`) VALUES
+(1, 1, 'tarea', 'SE ASIGNÓ UNA TAREA EN LA MATERIA DE MATEMÁTICAS', '2023-10-28 04:01:37', '2023-10-28 04:01:37');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `notificacion_users`
+--
+
+CREATE TABLE `notificacion_users` (
+  `id` bigint UNSIGNED NOT NULL,
+  `notificacion_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `visto` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `notificacion_users`
+--
+
+INSERT INTO `notificacion_users` (`id`, `notificacion_id`, `user_id`, `visto`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, 0, '2023-10-28 04:01:37', '2023-10-28 04:01:37'),
+(2, 1, 12, 0, '2023-10-28 04:01:37', '2023-10-28 04:01:37');
+
 -- --------------------------------------------------------
 
 --
@@ -582,7 +744,7 @@ CREATE TABLE `profesors` (
 --
 
 INSERT INTO `profesors` (`id`, `nombre`, `paterno`, `materno`, `ci`, `ci_exp`, `lugar_nac`, `fecha_nac`, `edad`, `sexo`, `estado_civil`, `zona`, `avenida`, `nro`, `fono`, `cel`, `email`, `nro_rda`, `afp`, `nua`, `item_fiscal`, `nro_seguro_social`, `caja_seguro_social`, `titulado`, `gestiones_trabajo`, `cargo`, `mes`, `observaciones`, `foto`, `fecha_registro`, `user_id`, `estado`, `created_at`, `updated_at`) VALUES
-(1, 'MARIO', 'APAZA', 'LLANOS', '302010', 'LP', 'LA PAZ', '1987-11-01', 36, 'M', 'CASADO', 'ZONA CENTRAL', 'SAAVEDRA', '3423', '2887654', '76564312', '', '45345', '343', '343', '343', '3423423', 'CNS', '1RA FASE', '2013', 'PROFESOR', 'EBERO', '', 'MAL2000011695304202.png', '2023-09-20', 6, 1, '2023-09-21 01:41:00', '2023-09-21 13:50:02'),
+(1, 'MARIO', 'APAZA', 'LLANOS', '302010', 'LP', 'LA PAZ', '1987-11-01', 36, 'M', 'CASADO', 'ZONA CENTRAL', 'SAAVEDRA', '3423', '2887654', '76564312', '', '45345', '343', '343', '343', '3423423', 'CNS', '1RA FASE', '2013', 'PROFESOR', 'EBERO', '', 'MARIO1698458395.jpg', '2023-10-27', 6, 1, '2023-09-21 01:41:00', '2023-10-28 01:59:55'),
 (2, 'MARIO', 'GONZALES', '', '3232', 'CB', 'LA PAZ', '1999-12-04', 23, 'M', 'SOLTERO', 'LOS OLIVOS', 'AV. 32', '1', '', '67676767', '', '1212', '212', '323', '13212', '3223', 'SEGURO', '2DA FASE', '', '', '', '', 'user_default.png', '2023-09-21', 9, 1, '2023-09-21 13:32:10', '2023-09-21 13:32:10');
 
 -- --------------------------------------------------------
@@ -607,9 +769,9 @@ CREATE TABLE `profesor_cursos` (
 --
 
 INSERT INTO `profesor_cursos` (`id`, `profesor_id`, `nominacion`, `institucion`, `duracion`, `fecha`, `created_at`, `updated_at`) VALUES
-(1, 1, '', '', '', '0000-00-00', '2023-09-21 01:41:01', '2023-09-21 01:41:01'),
-(2, 1, '', '', '', '0000-00-00', '2023-09-21 01:41:01', '2023-09-21 01:41:01'),
-(3, 1, '', '', '', '0000-00-00', '2023-09-21 01:41:02', '2023-09-21 01:41:02'),
+(1, 1, '', '', '', '0000-00-00', '2023-09-21 01:41:01', '2023-10-28 01:59:55'),
+(2, 1, '', '', '', '0000-00-00', '2023-09-21 01:41:01', '2023-10-28 01:59:55'),
+(3, 1, '', '', '', '0000-00-00', '2023-09-21 01:41:02', '2023-10-28 01:59:55'),
 (4, 2, '', '', '', '0000-00-00', '2023-09-21 13:32:10', '2023-09-21 13:32:10'),
 (5, 2, '', '', '', '0000-00-00', '2023-09-21 13:32:10', '2023-09-21 13:32:10'),
 (6, 2, '', '', '', '0000-00-00', '2023-09-21 13:32:10', '2023-09-21 13:32:10');
@@ -637,11 +799,11 @@ CREATE TABLE `profesor_estudios` (
 --
 
 INSERT INTO `profesor_estudios` (`id`, `profesor_id`, `nivel`, `institucion`, `anio_egreso`, `especialidad`, `nro_titulo`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Secundario', '', '', '', '', '2023-09-21 01:41:01', '2023-09-21 01:41:01'),
-(2, 1, 'Normal', '', '', '', '', '2023-09-21 01:41:01', '2023-09-21 01:41:01'),
-(3, 1, 'Universitario', 'UNIVERSIDAD MAYOR DE SAN ANDRES', '2008', 'CIENCIAS DE LA EDUCACIÓN', '2324', '2023-09-21 01:41:01', '2023-09-21 01:41:01'),
-(4, 1, 'Post Grado', '', '', '', '', '2023-09-21 01:41:01', '2023-09-21 01:41:01'),
-(5, 1, 'Post Grado', '', '', '', '', '2023-09-21 01:41:01', '2023-09-21 01:41:01'),
+(1, 1, 'SECUNDARIO', '', '', '', '', '2023-09-21 01:41:01', '2023-10-28 01:13:55'),
+(2, 1, 'NORMAL', '', '', '', '', '2023-09-21 01:41:01', '2023-10-28 01:13:55'),
+(3, 1, 'UNIVERSITARIO', 'UNIVERSIDAD MAYOR DE SAN ANDRES', '2008', 'CIENCIAS DE LA EDUCACIÓN', '2324', '2023-09-21 01:41:01', '2023-10-28 01:13:55'),
+(4, 1, 'POST GRADO', '', '', '', '', '2023-09-21 01:41:01', '2023-10-28 01:13:55'),
+(5, 1, 'POST GRADO', '', '', '', '', '2023-09-21 01:41:01', '2023-10-28 01:13:55'),
 (6, 2, 'Secundario', '', '', '', '', '2023-09-21 13:32:10', '2023-09-21 13:32:10'),
 (7, 2, 'Normal', '', '', '', '', '2023-09-21 13:32:10', '2023-09-21 13:32:10'),
 (8, 2, 'Universitario', '', '', '', '', '2023-09-21 13:32:10', '2023-09-21 13:32:10'),
@@ -769,7 +931,58 @@ CREATE TABLE `razon_socials` (
 --
 
 INSERT INTO `razon_socials` (`id`, `codigo`, `nombre`, `alias`, `nro_resolucion`, `codigo_sie`, `tipo_ue`, `ciudad`, `nro_distrito`, `desc_distrito`, `dir`, `nit`, `nro_aut`, `fono`, `cel`, `casilla`, `correo`, `web`, `logo`, `actividad_economica`, `created_at`, `updated_at`) VALUES
-(1, 'C1001', 'U. E. GUALBERTO VILLARROEL', 'UE GV', '0', '0', 'PÚBLICA', 'LA PAZ', '1', 'DISTRITO', 'ZONA CENTRAL CALLE 1', '0', '0', '0', '0', '', '', '', 'logo1698421356.png', 'SERVICIO DE ENSEÑANZA', '2023-05-05 20:15:36', '2023-10-27 15:42:36');
+(1, 'C1001', 'U. E. PRUEBA', 'UE GV', '0', '0', 'PÚBLICA', 'LA PAZ', '1', 'DISTRITO', 'ZONA CENTRAL CALLE 1', '0', '0', '0', '0', '', '', '', 'logo1698421356.png', 'SERVICIO DE ENSEÑANZA', '2023-05-05 20:15:36', '2023-10-28 01:14:17');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tareas`
+--
+
+CREATE TABLE `tareas` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `materia_id` bigint UNSIGNED NOT NULL,
+  `profesor_materia_id` bigint UNSIGNED NOT NULL,
+  `gestion` int NOT NULL,
+  `nombre` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `fecha_asignacion` date NOT NULL,
+  `fecha_limite` date NOT NULL,
+  `estado` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_registro` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `tareas`
+--
+
+INSERT INTO `tareas` (`id`, `user_id`, `materia_id`, `profesor_materia_id`, `gestion`, `nombre`, `descripcion`, `fecha_asignacion`, `fecha_limite`, `estado`, `fecha_registro`, `created_at`, `updated_at`) VALUES
+(1, 6, 2, 1, 2023, 'TAREA #1 MATEMATICAS', 'DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...', '2023-10-28', '2023-11-11', 'VIGENTE', '2023-10-28', '2023-10-28 04:01:37', '2023-10-28 04:01:43');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tarea_archivos`
+--
+
+CREATE TABLE `tarea_archivos` (
+  `id` bigint UNSIGNED NOT NULL,
+  `tarea_id` bigint UNSIGNED NOT NULL,
+  `link` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `tarea_archivos`
+--
+
+INSERT INTO `tarea_archivos` (`id`, `tarea_id`, `link`, `created_at`, `updated_at`) VALUES
+(1, 1, 'link #1', '2023-10-28 04:01:37', '2023-10-28 04:01:37'),
+(2, 1, 'link #2', '2023-10-28 04:01:37', '2023-10-28 04:01:37');
 
 -- --------------------------------------------------------
 
@@ -795,9 +1008,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `password`, `tipo`, `foto`, `codigo`, `estado`, `created_at`, `updated_at`) VALUES
 (1, 'admin', '$2y$10$.ERox9PjDF0yccV5sWkWk.Dwvq1rPmaXjOTKrdW4y9adSnCFc4bI6', 'ADMINISTRADOR', 'user_default.png', 0, 1, '2023-09-20 19:33:50', '2023-09-20 19:33:50'),
-(2, 'PPF100001', '$2y$10$yA7vdUUQKq5oDSfRHMmaKOFjYi4fMdI6NgR3E3ikSkPg5rs6qlRMm', 'ADMINISTRADOR', 'PABLO1695255530.jpg', 100001, 1, '2023-09-21 00:18:51', '2023-09-21 00:18:51'),
+(2, 'PPF100001', '$2y$10$yA7vdUUQKq5oDSfRHMmaKOFjYi4fMdI6NgR3E3ikSkPg5rs6qlRMm', 'ADMINISTRADOR', 'PABLO1698455602.png', 100001, 1, '2023-09-21 00:18:51', '2023-10-28 01:13:22'),
 (3, 'CDP500001', '$2y$10$Tswp/Ynexk79GD5sJ2KNtOHcXSZPCz.lFsgYLeF0QZbRUJ/jaDoO6', 'ESTUDIANTE', 'CONDE1695255877.jpg', 500001, 1, '2023-09-21 00:24:37', '2023-09-21 00:24:37'),
-(6, 'MAL200001', '$2y$10$83tAf8wRwQoA9tsnW1Q/4.4A2/fLVJ6WdZ6vhS4WZWwd5zQudewku', 'PROFESOR', 'MAL2000011695304202.png', 200001, 1, '2023-09-21 01:41:00', '2023-09-21 13:50:02'),
+(6, 'MAL200001', '$2y$10$83tAf8wRwQoA9tsnW1Q/4.4A2/fLVJ6WdZ6vhS4WZWwd5zQudewku', 'PROFESOR', 'MARIO1698458395.jpg', 200001, 1, '2023-09-21 01:41:00', '2023-10-28 01:59:55'),
 (9, 'MG200002', '$2y$10$8f0/wYvYeFZA11QJUliCxe.CCbh2ElG9d6KSRrjbMIUJejRhiafRq', 'PROFESOR', 'user_default.png', 200002, 1, '2023-09-21 13:32:10', '2023-09-21 13:32:10'),
 (10, 'CGM500002', '$2y$10$DCz8brGPfvi47VEc50rZHeC356Cd3/6TBhi9ZcnKFfiVQMBUV0lVi', 'ESTUDIANTE', 'CARLOS1695303507.jpg', 500002, 1, '2023-09-21 13:38:27', '2023-09-21 13:38:27'),
 (12, 'MVM500003', '$2y$10$nVb07HO8bg/.ReU4SPdYAOGxpQ5ieTSUku3MG4aU65toTDRk5tlp.', 'ESTUDIANTE', 'MAMANI1695305977.jpg', 500003, 1, '2023-09-21 14:19:37', '2023-09-21 14:19:37');
@@ -868,11 +1081,36 @@ ALTER TABLE `campos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `comunicados`
+--
+ALTER TABLE `comunicados`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `entregas`
+--
+ALTER TABLE `entregas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `entrega_archivos`
+--
+ALTER TABLE `entrega_archivos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `entrega_archivos_entrega_id_foreign` (`entrega_id`);
+
+--
 -- Indices de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `estudiantes_user_id_foreign` (`user_id`);
+
+--
+-- Indices de la tabla `historial_accions`
+--
+ALTER TABLE `historial_accions`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `inscripcions`
@@ -900,6 +1138,18 @@ ALTER TABLE `materia_grados`
 -- Indices de la tabla `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `notificacions`
+--
+ALTER TABLE `notificacions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `notificacion_users`
+--
+ALTER TABLE `notificacion_users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -957,6 +1207,20 @@ ALTER TABLE `profesor_trabajos`
 --
 ALTER TABLE `razon_socials`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tareas`
+--
+ALTER TABLE `tareas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tareas_materia_id_foreign` (`materia_id`);
+
+--
+-- Indices de la tabla `tarea_archivos`
+--
+ALTER TABLE `tarea_archivos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tarea_archivos_tarea_id_foreign` (`tarea_id`);
 
 --
 -- Indices de la tabla `users`
@@ -1023,16 +1287,40 @@ ALTER TABLE `campos`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de la tabla `comunicados`
+--
+ALTER TABLE `comunicados`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `entregas`
+--
+ALTER TABLE `entregas`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `entrega_archivos`
+--
+ALTER TABLE `entrega_archivos`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de la tabla `historial_accions`
+--
+ALTER TABLE `historial_accions`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- AUTO_INCREMENT de la tabla `inscripcions`
 --
 ALTER TABLE `inscripcions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `materias`
@@ -1050,7 +1338,19 @@ ALTER TABLE `materia_grados`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `notificacions`
+--
+ALTER TABLE `notificacions`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `notificacion_users`
+--
+ALTER TABLE `notificacion_users`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `paralelos`
@@ -1099,6 +1399,18 @@ ALTER TABLE `profesor_trabajos`
 --
 ALTER TABLE `razon_socials`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `tareas`
+--
+ALTER TABLE `tareas`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `tarea_archivos`
+--
+ALTER TABLE `tarea_archivos`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -1153,6 +1465,12 @@ ALTER TABLE `calificacions`
   ADD CONSTRAINT `calificacions_materia_id_foreign` FOREIGN KEY (`materia_id`) REFERENCES `materias` (`id`);
 
 --
+-- Filtros para la tabla `entrega_archivos`
+--
+ALTER TABLE `entrega_archivos`
+  ADD CONSTRAINT `entrega_archivos_entrega_id_foreign` FOREIGN KEY (`entrega_id`) REFERENCES `entregas` (`id`);
+
+--
 -- Filtros para la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
@@ -1176,6 +1494,18 @@ ALTER TABLE `materias`
 --
 ALTER TABLE `profesors`
   ADD CONSTRAINT `profesors_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Filtros para la tabla `tareas`
+--
+ALTER TABLE `tareas`
+  ADD CONSTRAINT `tareas_materia_id_foreign` FOREIGN KEY (`materia_id`) REFERENCES `materias` (`id`);
+
+--
+-- Filtros para la tabla `tarea_archivos`
+--
+ALTER TABLE `tarea_archivos`
+  ADD CONSTRAINT `tarea_archivos_tarea_id_foreign` FOREIGN KEY (`tarea_id`) REFERENCES `tareas` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

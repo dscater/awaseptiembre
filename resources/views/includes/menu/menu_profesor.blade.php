@@ -15,10 +15,10 @@
 </li>
 
 <li class="nav-item">
-    <a href="{{ route('calificacions.index', Auth::user()->profesor->id) }}"
-        class="nav-link {{ request()->is('calificacions*') ? 'active' : '' }}">
+    <a href="{{ route('tareas.index', Auth::user()->profesor->id) }}"
+        class="nav-link {{ request()->is('tareas*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-list-alt"></i>
-        <p>Administrar calificaciones</p>
+        <p>Tareas</p>
     </a>
 </li>
 

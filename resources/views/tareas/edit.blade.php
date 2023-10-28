@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Inscrpciones</h1>
+                    <h1 class="m-0 text-dark">Tareas</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('inscripcions.index') }}">Inscrpciones</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('tareas.index') }}">Tareas</a></li>
                         <li class="breadcrumb-item active">Modificar</li>
                     </ol>
                 </div>
@@ -27,12 +27,12 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Modificar Inscripción</h3>
+                            <h3 class="card-title">Modificar Área</h3>
                         </div>
                         <!-- /.card-header -->
-                        {{ Form::model($inscripcion, ['route' => ['inscripcions.update', $inscripcion->id], 'method' => 'put']) }}
+                        {{ Form::model($tarea, ['route' => ['tareas.update', $tarea->id], 'method' => 'put']) }}
                         <div class="card-body">
-                            @include('inscripcions.form.form')
+                            @include('tareas.form.form')
                             <button class="btn btn-info"><i class="fa fa-update"></i> ACTUALIZAR</button>
                         </div>
                         {{ Form::close() }}
@@ -46,13 +46,7 @@
         </div>
     </section>
 @endsection
+
 @section('scripts')
-    <script src="{{ asset('js/inscripcions/create.js') }}"></script>
-    <script>
-        @if (isset($inscripcion))
-            setTimeout(() => {
-                $("#select_grado").val("{{ $inscripcion->grado }}");
-            }, 300);
-        @endif
-    </script>
+    <script src="{{ asset('js/tareas/create.js') }}"></script>
 @endsection

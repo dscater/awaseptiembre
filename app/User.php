@@ -37,28 +37,13 @@ class User extends Authenticatable
         return $this->hasOne(Estudiante::class, 'user_id');
     }
 
-    public function asistencias()
-    {
-        return $this->hasMany(Asistencia::class, 'user_id');
-    }
-
     public function actividad_profesors()
     {
         return $this->hasMany(ActividadProfesor::class, 'user_id');
     }
 
-    public function desempeno_notificacions()
+    public function notificacion_users()
     {
-        return $this->hasMany(DesempenoNotificacion::class, 'user_id');
-    }
-
-    public function user_tutor()
-    {
-        return $this->hasOne(Estudiante::class, 'user_tutor_id');
-    }
-
-    public function user_madre()
-    {
-        return $this->hasOne(Estudiante::class, 'user_madre_id');
+        return $this->hasMany(NotificacionUser::class, 'user_id');
     }
 }

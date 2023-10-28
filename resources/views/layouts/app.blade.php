@@ -424,6 +424,35 @@
             }
         </script>
     @endif
+    <script>
+        const textareas = document.querySelectorAll('textarea');
+
+        function ajustarTamaño(textarea) {
+            textarea.style.height = 'auto'; // Restablece la altura a automático
+            textarea.style.height = textarea.scrollHeight + 'px'; // Establece la altura al valor de desplazamiento
+        }
+
+        // Función para reemplazar las etiquetas <br> o <br /> por saltos de línea (\n)
+        function reemplazarSaltosDeLinea(textarea) {
+            textarea.value = textarea.value
+                .replace(/<br\s*\/?>/g, '\n')
+                .replace(/\n\n+/g, '\n'); // Elimina saltos de línea adicionales
+        }
+        // Recorre la lista de <textarea> y agrega eventos de cambio en el contenido y en el enfoque
+        textareas.forEach((textarea) => {
+            textarea.addEventListener('input', () => {
+                ajustarTamaño(textarea);
+            });
+
+            textarea.addEventListener('focus', () => {
+                reemplazarSaltosDeLinea(textarea);
+            });
+
+            // Ajusta el tamaño inicialmente (cuando la página se carga) y reemplaza saltos de línea
+            ajustarTamaño(textarea);
+            reemplazarSaltosDeLinea(textarea);
+        });
+    </script>
 </body>
 
 </html>

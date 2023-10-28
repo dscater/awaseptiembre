@@ -83,10 +83,12 @@ class EstudianteController extends Controller
             $extension = "." . $file_foto->getClientOriginalExtension();
             $nom_foto = $usuario->nombre . time() . $extension;
             $file_foto->move(public_path() . "/imgs/users/", $nom_foto);
+            $usuario->foto = $usuario->foto;
             $usuario->user->foto = $usuario->foto;
             $usuario->foto = $nom_foto;
         }
 
+        $usuario->save();
         $usuario->user->save();
         return redirect()->route('estudiantes.index')->with('bien', 'Usuario modificado con éxito');
     }
