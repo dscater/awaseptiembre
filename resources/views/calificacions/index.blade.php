@@ -31,102 +31,53 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-6 ml-auto">
-                                    <div class="form-group">
-                                        <label>Seleccione Gestión*</label>
-                                        {{ Form::select('gestion', $array_gestiones, date('Y'), ['class' => 'form-control', 'required', 'id' => 'select_gestion']) }}
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-6 mr-auto">
-                                    <div class="form-group">
-                                        <label>Seleccione Trimestre*</label>
-                                        {{ Form::select(
-                                            'trimestre',
-                                            [
-                                                '' => 'Seleccione...',
-                                                '1' => '1er Trimestre',
-                                                '2' => '2do Trimestre',
-                                                '3' => '3er Trimestre',
-                                            ],
-                                            date('Y'),
-                                            ['class' => 'form-control', 'required', 'id' => 'select_trimestre'],
-                                        ) }}
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-sm-12">
-                                    <div class="form-group">
-                                        <label>Seleccione Materia*</label>
-                                        {{ Form::select('materia', [], date('Y'), ['class' => 'form-control', 'required', 'id' => 'select_materia']) }}
-                                    </div>
-                                </div>
-                            </div>
+                            <a href="{{ route('calificacions.create') }}" class="btn btn-info"><i class="fa fa-plus"></i>
+                                Nuevo</a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+                            <table id="example2" class="table data-table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Gestión</th>
+                                        <th>Estudiante</th>
+                                        <th>Materia</th>
+                                        <th>Ponderación</th>
+                                        <th>Descripción</th>
+                                        <th>Fecha de Registro</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $cont = 1;
+                                    @endphp
+                                    @foreach ($calificacions as $calificacion)
+                                        <tr>
+                                            <td>{{ $calificacion->gestion }}</td>
+                                            <td>{{ $calificacion->estudiante->full_name }}</td>
+                                            <td>{{ $calificacion->materia->nombre }}</td>
+                                            <td>{{ $calificacion->ponderacion }}</td>
+                                            <td>{!! $calificacion->descripcion !!}</td>
+                                            <td>{{ $calificacion->fecha_registro }}</td>
+                                            <td class="btns-opciones">
+                                                @if (Auth::user()->tipo == 'ADMINISTRADOR' || Auth::user()->tipo == 'PROFESOR')
+                                                    <a href="{{ route('calificacions.edit', $calificacion->id) }}"
+                                                        class="modificar"><i class="fa fa-edit" data-toggle="tooltip"
+                                                            data-placement="left" title="Modificar"></i></a>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table table-bordered tabla_calificacions">
-                                        <thead>
-                                            <tr class="bg-blue">
-                                                <th>DATOS DEL ESTUDIANTE</th>
-                                                <th colspan="7">ÁREA 1</th>
-                                                <th colspan="7">ÁREA 2</th>
-                                                <th colspan="7">ÁREA 3</th>
-                                                <th colspan="7">ÁREA 4</th>
-                                                <th rowspan="2" class="bg-orange vertical">
-                                                    <div>PROMEDIO FINAL</div>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    APELLIDO(S) Y NOMBRE(S)
-                                                </th>
-                                                <th>A1</th>
-                                                <th>A2</th>
-                                                <th>A3</th>
-                                                <th>A4</th>
-                                                <th>A5</th>
-                                                <th>A6</th>
-                                                <th class="bg-lightblue vertical">
-                                                    <div>PROMEDIO</div>
-                                                </th>
-                                                <th>A1</th>
-                                                <th>A2</th>
-                                                <th>A3</th>
-                                                <th>A4</th>
-                                                <th>A5</th>
-                                                <th>A6</th>
-                                                <th class="bg-lightblue vertical">
-                                                    <div>PROMEDIO</div>
-                                                </th>
-                                                <th>A1</th>
-                                                <th>A2</th>
-                                                <th>A3</th>
-                                                <th>A4</th>
-                                                <th>A5</th>
-                                                <th>A6</th>
-                                                <th class="bg-lightblue vertical">
-                                                    <div>PROMEDIO</div>
-                                                </th>
-                                                <th>A1</th>
-                                                <th>A2</th>
-                                                <th>A3</th>
-                                                <th>A4</th>
-                                                <th>A5</th>
-                                                <th>A6</th>
-                                                <th class="bg-lightblue vertical">
-                                                    <div>PROMEDIO</div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="contenedor_materias">
+                                                    <a href="#"
+                                                        data-url="{{ route('calificacions.destroy', $calificacion->id) }}"
+                                                        data-toggle="modal" data-target="#modal-eliminar"
+                                                        class="eliminar"><i class="fa fa-trash" data-toggle="tooltip"
+                                                            data-placement="left" title="Eliminar"></i></a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
 
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -137,13 +88,60 @@
             <!-- /.row -->
         </div>
     </section>
-
-    <input type="hidden" id="prof" value="{{ $profesor->id }}">
-    <input type="hidden" id="urlMaterias" value="{{ route('materias.materiasCalificacions') }}">
-    <input type="hidden" id="urlEstudiantes" value="{{ route('calificacions.getEstudiantesCalificacions') }}">
-    <input type="hidden" id="urlStoreCalificacion" value="{{ route('calificacions.store') }}">
+    @include('modal.eliminar')
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/calificacions/index.js') }}"></script>
+    <script>
+        @if (session('bien'))
+            mensajeNotificacion('{{ session('bien') }}', 'success');
+        @endif
+
+        @if (session('info'))
+            mensajeNotificacion('{{ session('info') }}', 'info');
+        @endif
+
+        @if (session('error'))
+            mensajeNotificacion('{{ session('error') }}', 'error');
+        @endif
+
+
+        $('table.data-table').DataTable({
+            columns: [{
+                    width: "5%"
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    width: "10%"
+                },
+            ],
+            scrollCollapse: true,
+            language: lenguaje,
+            pageLength: 25
+        });
+
+
+        // ELIMINAR
+        $(document).on('click', 'table tbody tr td.btns-opciones a.eliminar', function(e) {
+            e.preventDefault();
+            let gestion = $(this).parents('tr').children('td').eq(0).text();
+            let estudiante = $(this).parents('tr').children('td').eq(1).text();
+            let ponderacion = $(this).parents('tr').children('td').eq(3).text();
+            $('#mensajeEliminar').html(
+                `¿Está seguro(a) de eliminar la calificación con ponderación <b>${ponderacion}</b>, gestión <b>${gestion}</b> del estudiante: <b>${estudiante}</b>?`
+            );
+
+            let url = $(this).attr('data-url');
+            console.log($(this).attr('data-url'));
+            $('#formEliminar').prop('action', url);
+        });
+
+        $('#btnEliminar').click(function() {
+            $('#formEliminar').submit();
+        });
+    </script>
 @endsection

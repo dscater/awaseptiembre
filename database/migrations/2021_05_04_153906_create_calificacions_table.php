@@ -16,6 +16,9 @@ class CreateCalificacionsTable extends Migration
         Schema::create('calificacions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('inscripcion_id')->unsigned();
+            $table->bigInteger('estudiante_id')->unsigned();
+            $table->integer('gestion');
+            $table->bigInteger('profesor_materia_id')->unsigned();
             $table->bigInteger('materia_id')->unsigned();
             $table->double('notal_final', 8, 2);
             $table->string('estado');

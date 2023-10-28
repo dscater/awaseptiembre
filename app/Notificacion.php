@@ -12,6 +12,16 @@ class Notificacion extends Model
         "descripcion",
     ];
 
+    public function notificacion_users()
+    {
+        return $this->hasMany(NotificacionUser::class, 'notificacion_id');
+    }
+
+    public function calificacion()
+    {
+        return $this->belongsTo(Calificacion::class, 'registro_id');
+    }
+
     public function tarea()
     {
         return $this->belongsTo(Tarea::class, 'registro_id');

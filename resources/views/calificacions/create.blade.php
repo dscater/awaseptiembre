@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Tareas</h1>
+                    <h1 class="m-0 text-dark"></h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('tareas.index') }}">Tareas</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('calificacions.index') }}">Calificaciones</a></li>
                         <li class="breadcrumb-item active">Nuevo</li>
                     </ol>
                 </div>
@@ -27,12 +27,12 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Nueva Tarea</h3>
+                            <h3 class="card-title">Nuevo Registro</h3>
                         </div>
                         <!-- /.card-header -->
-                        {{ Form::open(['route' => 'tareas.store', 'method' => 'post']) }}
+                        {{ Form::open(['route' => 'calificacions.store', 'method' => 'post']) }}
                         <div class="card-body">
-                            @include('tareas.form.form')
+                            @include('calificacions.form.form')
 
                             <button class="btn btn-info"><i class="fa fa-save"></i> GUARDAR</button>
                         </div>
@@ -46,11 +46,12 @@
             <!-- /.row -->
         </div>
     </section>
-
     <input type="hidden" id="prof" value="{{ $profesor->id }}">
     <input type="hidden" id="urlMaterias" value="{{ route('materias.materiasCalificacions') }}">
+    <input type="hidden" id="urlEstudiantes" value="{{ route('calificacions.getEstudiantesMateria') }}">
+    <input type="hidden" id="urlStoreCalificacion" value="{{ route('calificacions.store') }}">
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/tareas/create.js') }}"></script>
+    <script src="{{ asset('js/calificacions/create.js') }}"></script>
 @endsection

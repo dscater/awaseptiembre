@@ -200,19 +200,21 @@ Route::middleware(['auth'])->group(function () {
     Route::resource("tareas", "TareaController");
 
     // CALIFICACIONES
-    Route::get('calificacions/{profesor}', 'CalificacionController@index')->name('calificacions.index');
+    Route::get('calificacions', 'CalificacionController@index')->name('calificacions.index');
+
+    Route::get('calificacions/create', 'CalificacionController@create')->name('calificacions.create');
 
     Route::post('calificacions/store', 'CalificacionController@store')->name('calificacions.store');
 
-    Route::get('calificacions/getEstudiantes/Calificacions', 'CalificacionController@getEstudiantesCalificacions')->name('calificacions.getEstudiantesCalificacions');
+    Route::get('calificacions/edit/{calificacion}', 'CalificacionController@edit')->name('calificacions.edit');
+
+    Route::put('calificacions/update/{calificacion}', 'CalificacionController@update')->name('calificacions.update');
+
+    Route::delete('calificacions/destroy/{calificacion}', 'CalificacionController@destroy')->name('calificacions.destroy');
+
+    Route::get('calificacions/getEstudiantes/Calificacions', 'CalificacionController@getEstudiantesMateria')->name('calificacions.getEstudiantesMateria');
 
     Route::get('calificacions/estudiante/{estudiante}', 'CalificacionController@calificacion_estudiante')->name('calificacions.calificacion_estudiante');
-
-    Route::get('calificacions/notas/{estudiante}', 'CalificacionController@notas_estudiante')->name('calificacions.notas_estudiante');
-
-    Route::get('calificacions/boleta/boleta_estudiante/{estudiante}', 'CalificacionController@boleta_estudiante')->name('boleta.boleta_estudiante');
-
-    Route::get('calificacions/historial/historial_academico/{estudiante}', 'CalificacionController@historial_academico')->name('calificacions.historial_academico');
 
     // RAZON SOCIAL
     Route::get('razon_social/index', 'RazonSocialController@index')->name('razon_social.index');

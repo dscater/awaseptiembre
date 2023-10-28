@@ -11,8 +11,11 @@ let input_eliminado = `<input type="hidden" value="0" name="eliminados[]"/>`;
 let btnAgregarLink = $("#btnAgregarLink");
 let contenedor_links = $("#contenedor_links");
 let contenedor_eliminados = $("#contenedor_eliminados");
+let select_gestion = $("#select_gestion");
+let select_materia = $("#select_materia");
 
 $(document).ready(function () {
+    obtieneMaterias();
     verificaLinks();
     btnAgregarLink.click(agregarLink);
 
@@ -43,4 +46,23 @@ function agregarLink() {
     let nuevo_link = $(link).clone();
     contenedor_links.append(nuevo_link);
     verificaLinks();
+}
+
+function obtieneMaterias() {
+    if (select_gestion.val() != "") {
+        $.ajax({
+            type: "GET",
+            url: $("#urlMaterias").val(),
+            data: {
+                profesor: $("#prof").val(),
+                gestion: select_gestion.val(),
+            },
+            dataType: "json",
+            success: function (response) {
+                select_materia.html(response);
+            },
+        });
+    } else {
+        select_materia.html("");
+    }
 }

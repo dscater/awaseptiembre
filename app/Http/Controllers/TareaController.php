@@ -7,6 +7,7 @@ use App\HistorialAccion;
 use App\Inscripcion;
 use App\Notificacion;
 use App\NotificacionUser;
+use App\Profesor;
 use App\ProfesorMateria;
 use App\Tarea;
 use App\TareaArchivo;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Log;
 class TareaController extends Controller
 {
     public $validacion = [
+        'gestion' => 'required',
         'profesor_materia_id' => 'required',
         'nombre' => 'required',
         'fecha_asignacion' => 'required|date',
@@ -25,6 +27,7 @@ class TareaController extends Controller
     ];
 
     public $mensajes = [
+        'gestion.required' => 'Este campo es obligatorio',
         'profesor_materia_id.required' => 'Este campo es obligatorio',
         'nombre.required' => 'Este campo es obligatorio',
         'fecha_asignacion.required' => 'Este campo es obligatorio',
@@ -44,16 +47,23 @@ class TareaController extends Controller
 
     public function create()
     {
-        $gestion = date("Y");
-        $materias = ProfesorMateria::where('profesor_id', Auth::user()->profesor->id)
-            ->where('gestion', $gestion)
-            ->get();
+        $gestion_min = Inscripcion::min('gestion');
+        $gestion_max = Inscripcion::max('gestion');
 
-        $array_materias[''] = 'Seleccione...';
-        foreach ($materias as $value) {
-            $array_materias[$value->id] = $value->materia->nombre . ' | ' . $value->nivel . ' | ' . $value->grado . '° ' . $value->paralelo->paralelo;
+        $array_gestiones = [];
+        if ($gestion_min) {
+            $array_gestiones[''] = 'Seleccione...';
+            for ($i = (int)$gestion_min; $i <= (int)$gestion_max; $i++) {
+                $array_gestiones[$i] = $i;
+            }
+        } else {
+            $array_gestiones = [date("Y")];
         }
-        return view("tareas.create", compact("array_materias"));
+        $profesor = null;
+        if (Auth::user()->tipo == 'PROFESOR') {
+            $profesor = Profesor::where("user_id", Auth::user()->id)->get()->first();
+        }
+        return view("tareas.create", compact("array_gestiones", 'profesor'));
     }
 
     public function store(Request $request)
@@ -62,12 +72,10 @@ class TareaController extends Controller
         DB::beginTransaction();
         try {
             // crear el Tarea
-            $gestion = date("Y");
             $profesor_materia = ProfesorMateria::find($request->profesor_materia_id);
             $request["materia_id"] = $profesor_materia->materia_id;
             $request["user_id"] = Auth::user()->id;
             $request["estado"] = "VIGENTE";
-            $request["gestion"] = $gestion;
             $request["fecha_registro"] = date("Y-m-d");
             $nueva_tarea = Tarea::create(array_map('mb_strtoupper', $request->except("links")));
             $nueva_tarea->descripcion = nl2br(mb_strtoupper($request->descripcion));
@@ -143,16 +151,23 @@ class TareaController extends Controller
 
     public function edit(Tarea $tarea)
     {
-        $gestion = date("Y");
-        $materias = ProfesorMateria::where('profesor_id', Auth::user()->profesor->id)
-            ->where('gestion', $gestion)
-            ->get();
+        $gestion_min = Inscripcion::min('gestion');
+        $gestion_max = Inscripcion::max('gestion');
 
-        $array_materias[''] = 'Seleccione...';
-        foreach ($materias as $value) {
-            $array_materias[$value->id] = $value->materia->nombre . ' | ' . $value->nivel . ' | ' . $value->grado . '° ' . $value->paralelo->paralelo;
+        $array_gestiones = [];
+        if ($gestion_min) {
+            $array_gestiones[''] = 'Seleccione...';
+            for ($i = (int)$gestion_min; $i <= (int)$gestion_max; $i++) {
+                $array_gestiones[$i] = $i;
+            }
+        } else {
+            $array_gestiones = [date("Y")];
         }
-        return view("tareas.edit", compact("tarea", "array_materias"));
+        $profesor = null;
+        if (Auth::user()->tipo == 'PROFESOR') {
+            $profesor = Profesor::where("user_id", Auth::user()->id)->get()->first();
+        }
+        return view("tareas.edit", compact("tarea", "array_gestiones", "profesor"));
     }
 
     public function update(Request $request, Tarea $tarea)
@@ -216,6 +231,13 @@ class TareaController extends Controller
     {
         DB::beginTransaction();
         try {
+            // eliminar notificacion
+            $notificacion = Notificacion::where("registro_id", $tarea->id)->where("modulo", "tarea")->get()->first();
+            if ($notificacion) {
+                $notificacion->notificacion_users()->delete();
+                $notificacion->delete();
+            }
+            $tarea->tarea_archivos()->delete();
             $datos_original = HistorialAccion::getDetalleRegistro($tarea, "tareas");
             $tarea->delete();
             HistorialAccion::create([

@@ -11,10 +11,43 @@ use App\Calificacion;
 use App\CalificacionTrimestre;
 use App\ProfesorMateria;
 use App\Estudiante;
+use App\HistorialAccion;
+use App\Notificacion;
+use App\NotificacionUser;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CalificacionController extends Controller
 {
+    public $validacion = [
+        'gestion' => 'required',
+        'profesor_materia_id' => 'required',
+        'inscripcion_id' => 'required',
+        'ponderacion' => 'required|numeric|min:0|max:100',
+    ];
+
+    public $mensajes = [
+        'gestion.required' => 'Este campo es obligatorio',
+        'profesor_materia_id.required' => 'Este campo es obligatorio',
+        'inscripcion_id.required' => 'Este campo es obligatorio',
+        'ponderacion.required' => 'Este campo es obligatorio',
+        'ponderacion.numeric' => 'Debes indicar un valor númerico',
+        'ponderacion.min' => 'El valor debe ser mayor o igual a :min',
+        'ponderacion.max' => 'El valor no puede ser mayor a :max',
+    ];
+
     public function index(Profesor $profesor)
+    {
+        $calificacions = Calificacion::orderBy("id", "desc")->get();
+        if (Auth::user()->tipo == 'PROFESOR') {
+            $id_profesor_materias = ProfesorMateria::where('profesor_id', Auth::user()->profesor->id)
+                ->pluck("id");
+            $calificacions = Calificacion::whereIn("profesor_materia_id", $id_profesor_materias)->orderBy("id", "desc")->get();
+        }
+        return view('calificacions.index', compact('calificacions'));
+    }
+
+    public function create()
     {
         $gestion_min = Inscripcion::min('gestion');
         $gestion_max = Inscripcion::max('gestion');
@@ -25,139 +58,153 @@ class CalificacionController extends Controller
             for ($i = (int)$gestion_min; $i <= (int)$gestion_max; $i++) {
                 $array_gestiones[$i] = $i;
             }
+        } else {
+            $array_gestiones = [date("Y")];
         }
 
-        $paralelos = paralelo::all();
-        $array_paralelos[''] = 'Seleccione...';
-
-        foreach ($paralelos as $value) {
-            $array_paralelos[$value->id] = $value->paralelo;
+        $profesor = null;
+        if (Auth::user()->tipo == 'PROFESOR') {
+            $profesor = Profesor::where("user_id", Auth::user()->id)->get()->first();
         }
-        return view('calificacions.index', compact('profesor', 'array_gestiones', 'array_paralelos'));
+        return view('calificacions.create', compact('array_gestiones', 'profesor'));
     }
+
 
     public function store(Request $request)
     {
-        $calificacion = $request->calificacion;
-        $trimestre = $request->trimestre;
-        $area = $request->area;
-        $nro_actividad = $request->actividad;
-        $nota = $request->nota;
-        $promedio = $request->promedio;
-        $promedio_final = $request->promedio_final;
+        $request->validate($this->validacion, $this->mensajes);
+        DB::beginTransaction();
+        try {
+            // crear la Calificacion
+            $profesor_materia = ProfesorMateria::find($request->profesor_materia_id);
+            $inscripcion = Inscripcion::find($request->inscripcion_id);
+            $request["estudiante_id"] = $inscripcion->estudiante_id;
+            $request["materia_id"] = $profesor_materia->materia_id;
+            $request["fecha_registro"] = date("Y-m-d");
+            $nueva_calificacion = Calificacion::create(array_map('mb_strtoupper', $request->all()));
+            $nueva_calificacion->descripcion = nl2br(mb_strtoupper($request->descripcion));
+            $nueva_calificacion->save();
 
-        $calificacion_estudiante = Calificacion::find($calificacion);
-        $trimestre = CalificacionTrimestre::where('calificacion_id', $calificacion_estudiante->id)
-            ->where('trimestre', $trimestre)
-            ->get()
-            ->first();
-        $actividad = TrimestreActividad::where('ct_id', $trimestre->id)
-            ->where('area', $area)
-            ->get()
-            ->first();
+            $datos_original = HistorialAccion::getDetalleRegistro($nueva_calificacion, "calificacions");
+            HistorialAccion::create([
+                'user_id' => Auth::user()->id,
+                'accion' => 'CREACIÓN',
+                'descripcion' => 'EL USUARIO ' . Auth::user()->usuario . ' REGISTRO UNA CALIFICACIÓN',
+                'datos_original' => $datos_original,
+                'modulo' => 'CALIFICACIONES',
+                'fecha' => date('Y-m-d'),
+                'hora' => date('H:i:s')
+            ]);
 
-        $actividad['a' . $nro_actividad] = $nota;
-        $actividad->promedio = $promedio;
-        $actividad->save();
+            // crear notificacion
+            $notificacion = Notificacion::create([
+                "registro_id" => $nueva_calificacion->id,
+                "modulo" => "calificacion",
+                "descripcion" => "SE REGISTRO UNA CALIFICACIÓN EN LA MATERIA DE " . $nueva_calificacion->materia->nombre,
+            ]);
 
-        $trimestre->promedio_final = $promedio_final;
-        $trimestre->save();
+            // registrar notificacion-user
+            NotificacionUser::create([
+                "notificacion_id" => $notificacion->id,
+                "user_id" => $inscripcion->estudiante->user->id,
+                "visto" => 0,
+            ]);
 
-        // COMPROBAR EL ESTADO DE LA CALIFICACION
-        $calificacion_trimestres = CalificacionTrimestre::where('calificacion_id', $calificacion_estudiante->id)->get();
-        $suma_promedios = 0;
-        foreach ($calificacion_trimestres as $trimestre) {
-            $suma_promedios += (float)$trimestre->promedio_final;
+            DB::commit();
+            return redirect()->route("calificacions.index")->with("bien", "Registro realizado");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route("calificacions.index")->with("error", $e->getMessage());
         }
-
-        $suma_promedios = $suma_promedios / 3;
-        $promedio_trimestres = \number_format($suma_promedios, 0);
-        $calificacion_estudiante->nota_final = $promedio_trimestres;
-        if ($promedio_trimestres > 50) {
-            $calificacion_estudiante->estado = 'APROBADO';
-        } else {
-            $calificacion_estudiante->estado = 'REPROBADO';
-        }
-        $calificacion_estudiante->save();
-
-        return response()->JSON([
-            'sw' => true
-        ]);
     }
-
-    public function getEstudiantesCalificacions(Request $request)
+    public function edit(Calificacion $calificacion)
     {
-        $materia = $request->materia;
-        $gestion = $request->gestion;
-        $trimestre = $request->trimestre;
+        $gestion_min = Inscripcion::min('gestion');
+        $gestion_max = Inscripcion::max('gestion');
 
-        $profesor_materia = ProfesorMateria::find($materia);
-
-        $calificacions = Calificacion::select('calificacions.*')
-            ->join('inscripcions', 'inscripcions.id', '=', 'calificacions.inscripcion_id')
-            ->where('calificacions.materia_id', $profesor_materia->materia_id)
-            ->where('inscripcions.nivel', $profesor_materia->nivel)
-            ->where('inscripcions.grado', $profesor_materia->grado)
-            ->where('inscripcions.paralelo_id', $profesor_materia->paralelo_id)
-            ->where('inscripcions.turno', $profesor_materia->turno)
-            ->where('inscripcions.gestion', $gestion)
-            ->where('inscripcions.status', 1)
-            ->get();
-
-        $suma_promedio = 0;
-
-        $html = '';
-        if (count($calificacions) > 0) {
-            foreach ($calificacions as $calificacion) {
-
-                $html .= '<tr class="fila" data-calificacion="' . $calificacion->id . '">
-                            <td>' . $calificacion->inscripcion->estudiante->paterno . ' ' . $calificacion->inscripcion->estudiante->materno . ' ' . $calificacion->inscripcion->estudiante->nombre . '</td>';
-
-                for ($i = 1; $i <= 4; $i++) {
-                    $c_trimestre = CalificacionTrimestre::where('calificacion_id', $calificacion->id)
-                        ->where('trimestre', $trimestre)
-                        ->get()
-                        ->first();
-
-                    $actividad = TrimestreActividad::where('ct_id', $c_trimestre->id)
-                        ->where('area', $i)
-                        ->get()
-                        ->first();
-
-                    $html .= '<td class="a' . $i . '1 calificacion" data-actividad="1" data-area="' . $i . '">
-                                    <input type="number" min="0" value="' . $actividad->a1 . '">
-                                </td>
-                                <td class="a' . $i . '2 calificacion" data-actividad="2" data-area="' . $i . '">
-                                    <input type="number" min="0" value="' . $actividad->a2 . '">
-                                </td>
-                                <td class="a' . $i . '3 calificacion" data-actividad="3" data-area="' . $i . '">
-                                    <input type="number" min="0" value="' . $actividad->a3 . '">
-                                </td>
-                                <td class="a' . $i . '4 calificacion" data-actividad="4" data-area="' . $i . '">
-                                    <input type="number" min="0" value="' . $actividad->a4 . '">
-                                </td>
-                                <td class="a' . $i . '5 calificacion" data-actividad="5" data-area="' . $i . '">
-                                    <input type="number" min="0" value="' . $actividad->a5 . '">
-                                </td>
-                                <td class="a' . $i . '6 calificacion" data-actividad="6" data-area="' . $i . '">
-                                    <input type="number" min="0" value="' . $actividad->a6 . '">
-                                </td>
-                                <td class="bg-lightblue p' . $i . ' promedio" data-area="' . $i . '">' . $actividad->promedio . '</td>';
-                    $suma_promedio += (float)$actividad->promedio;
-                }
-                $html .= ' <td class="bg-orange pf promedio_final">' . $c_trimestre->promedio_final . '</td>';
-                $html .= '</tr>';
+        $array_gestiones = [];
+        if ($gestion_min) {
+            $array_gestiones[''] = 'Seleccione...';
+            for ($i = (int)$gestion_min; $i <= (int)$gestion_max; $i++) {
+                $array_gestiones[$i] = $i;
             }
         } else {
-            $html = '<tr class="vacio">
-            <td colspan="30" class="text-center">No se encontrarón registros</td>
-            </tr>';
+            $array_gestiones = [date("Y")];
         }
 
-        return response()->JSON([
-            'sw' => true,
-            'html' => $html
-        ]);
+        $profesor = null;
+        if (Auth::user()->tipo == 'PROFESOR') {
+            $profesor = Profesor::where("user_id", Auth::user()->id)->get()->first();
+        }
+        return view('calificacions.edit', compact('calificacion', 'array_gestiones', 'profesor'));
+    }
+
+
+    public function update(Calificacion $calificacion, Request $request)
+    {
+        $request->validate($this->validacion, $this->mensajes);
+        DB::beginTransaction();
+        try {
+            $datos_original = HistorialAccion::getDetalleRegistro($calificacion, "calificacions");
+            // actualizar la Calificacion
+            $profesor_materia = ProfesorMateria::find($request->profesor_materia_id);
+            $inscripcion = Inscripcion::find($request->inscripcion_id);
+            $request["estudiante_id"] = $inscripcion->estudiante_id;
+            $request["materia_id"] = $profesor_materia->materia_id;
+            $calificacion->update(array_map('mb_strtoupper', $request->all()));
+            $calificacion->descripcion = nl2br(mb_strtoupper($request->descripcion));
+            $calificacion->save();
+
+            $datos_nuevo = HistorialAccion::getDetalleRegistro($calificacion, "calificacions");
+            HistorialAccion::create([
+                'user_id' => Auth::user()->id,
+                'accion' => 'MODIFICACIÓN',
+                'descripcion' => 'EL USUARIO ' . Auth::user()->usuario . ' MODIFICÓ UNA CALIFICACIÓN',
+                'datos_original' => $datos_original,
+                'datos_nuevo' => $datos_nuevo,
+                'modulo' => 'CALIFICACIONES',
+                'fecha' => date('Y-m-d'),
+                'hora' => date('H:i:s')
+            ]);
+
+            DB::commit();
+            return redirect()->route("calificacions.index")->with("bien", "Registro realizado");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route("calificacions.index")->with("error", $e->getMessage());
+        }
+    }
+
+
+    public function destroy(Calificacion $calificacion)
+    {
+        DB::beginTransaction();
+        try {
+            // eliminar notificacion
+            $notificacion = Notificacion::where("registro_id", $calificacion->id)->where("modulo", "calificacion")->get()->first();
+            if ($notificacion) {
+                $notificacion->notificacion_users()->delete();
+                $notificacion->delete();
+            }
+
+            $datos_original = HistorialAccion::getDetalleRegistro($calificacion, "calificacions");
+            $calificacion->delete();
+            HistorialAccion::create([
+                'user_id' => Auth::user()->id,
+                'accion' => 'ELIMINACIÓN',
+                'descripcion' => 'EL USUARIO ' . Auth::user()->usuario . ' ELIMINÓ UNA CALIFICACIÓN',
+                'datos_original' => $datos_original,
+                'modulo' => 'CALIFICACIONES',
+                'fecha' => date('Y-m-d'),
+                'hora' => date('H:i:s')
+            ]);
+
+            DB::commit();
+            return redirect()->route("calificacions.index")->with("bien", "Registro eliminado");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route("calificacions.index")->with("error", $e->getMessage());
+        }
     }
 
     public function calificacion_estudiante(Estudiante $estudiante)
@@ -184,88 +231,33 @@ class CalificacionController extends Controller
         return view('calificacions.calificacion_estudiante', compact('estudiante', 'array_gestiones', 'array_paralelos'));
     }
 
-    public function notas_estudiante(Estudiante $estudiante, Request $request)
+    public function getEstudiantesMateria(Request $request)
     {
+        $materia = $request->materia;
         $gestion = $request->gestion;
 
-        $inscripcion = Inscripcion::where('estudiante_id', $estudiante->id)
-            ->where('gestion', $gestion)
-            ->get()
-            ->first();
+        $profesor_materia = ProfesorMateria::find($materia);
 
-        $calificacions = [];
-        if ($inscripcion) {
-            $calificacions = Calificacion::where('inscripcion_id', $inscripcion->id)->get();
-        }
+        $inscripcions = Inscripcion::where('inscripcions.nivel', $profesor_materia->nivel)
+            ->where('inscripcions.grado', $profesor_materia->grado)
+            ->where('inscripcions.paralelo_id', $profesor_materia->paralelo_id)
+            ->where('inscripcions.turno', $profesor_materia->turno)
+            ->where('inscripcions.gestion', $gestion)
+            ->where('inscripcions.status', 1)
+            ->get();
 
-        $html = '';
-        $cont = 1;
-        foreach ($calificacions as $calificacion) {
-            $promedio = $calificacion->trimestres[0]->promedio_final + $calificacion->trimestres[1]->promedio_final + $calificacion->trimestres[2]->promedio_final;
-            $promedio = $promedio / 3;
-            $promedio = (int)$promedio;
-            $obs = 'APROBADO';
-            if ($promedio < 51) {
-                $obs = 'REPROBADO';
+        $html = '<option>Seleccione...</option>';
+        if (count($inscripcions) > 0) {
+            foreach ($inscripcions as $inscripcion) {
+                $html .= ' <option value="' . $inscripcion->id . '">' . $inscripcion->estudiante->full_name . '</option>';
             }
-            $html .= '<tr>
-                        <td>' . $cont++ . '</td>
-                        <td>' . $calificacion->materia->nombre . '</td>
-                        <td>' . $calificacion->trimestres[0]->promedio_final . '</td>
-                        <td>' . $calificacion->trimestres[1]->promedio_final . '</td>
-                        <td>' . $calificacion->trimestres[2]->promedio_final . '</td>
-                        <td>' . $promedio . '</td>
-                        <td>' . $obs . '</td>
-                    </tr>';
+        } else {
+            $html = '<option>- Sin resultados -</option>';
         }
 
         return response()->JSON([
             'sw' => true,
             'html' => $html
         ]);
-    }
-
-    public function boleta_estudiante(Estudiante $estudiante)
-    {
-        $gestion_min = Inscripcion::min('gestion');
-        $gestion_max = Inscripcion::max('gestion');
-
-        $array_gestiones = [];
-        if ($gestion_min) {
-            $array_gestiones[''] = 'Seleccione...';
-            for ($i = (int)$gestion_min; $i <= (int)$gestion_max; $i++) {
-                $array_gestiones[$i] = $i;
-            }
-        }
-
-        $paralelos = paralelo::all();
-        $array_paralelos[''] = 'Seleccione...';
-        foreach ($paralelos as $value) {
-            $array_paralelos[$value->id] = $value->paralelo;
-        }
-
-        return view('calificacions.boleta_estudiante', compact('estudiante', 'array_gestiones', 'array_paralelos'));
-    }
-
-    public function historial_academico(Estudiante $estudiante)
-    {
-        $gestion_min = Inscripcion::min('gestion');
-        $gestion_max = Inscripcion::max('gestion');
-
-        $array_gestiones = [];
-        if ($gestion_min) {
-            $array_gestiones[''] = 'Seleccione...';
-            for ($i = (int)$gestion_min; $i <= (int)$gestion_max; $i++) {
-                $array_gestiones[$i] = $i;
-            }
-        }
-
-        $paralelos = paralelo::all();
-        $array_paralelos[''] = 'Seleccione...';
-        foreach ($paralelos as $value) {
-            $array_paralelos[$value->id] = $value->paralelo;
-        }
-
-        return view('calificacions.historial_academico', compact('estudiante', 'array_gestiones', 'array_paralelos'));
     }
 }

@@ -87,7 +87,7 @@
     </section>
 
     @include('modal.eliminar')
-
+@endsection
 @section('scripts')
     <script>
         @if (session('bien'))
@@ -138,5 +138,4 @@
             $('#formEliminar').submit();
         });
     </script>
-@endsection
 @endsection

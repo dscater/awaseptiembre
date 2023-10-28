@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 28-10-2023 a las 04:05:04
+-- Tiempo de generación: 28-10-2023 a las 15:13:28
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 7.4.19
 
@@ -263,6 +263,9 @@ INSERT INTO `areas` (`id`, `campo_id`, `nombre`, `tipo`, `descripcion`, `created
 CREATE TABLE `calificacions` (
   `id` bigint UNSIGNED NOT NULL,
   `inscripcion_id` bigint UNSIGNED NOT NULL,
+  `estudiante_id` bigint UNSIGNED NOT NULL,
+  `gestion` int NOT NULL,
+  `profesor_materia_id` bigint UNSIGNED NOT NULL,
   `materia_id` bigint UNSIGNED NOT NULL,
   `ponderacion` double(8,2) NOT NULL,
   `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
@@ -344,7 +347,8 @@ CREATE TABLE `entregas` (
 
 INSERT INTO `entregas` (`id`, `user_id`, `inscripcion_id`, `materia_id`, `tarea_id`, `observaciones`, `fecha_entrega`, `calificacion`, `estado`, `enviado`, `fecha_registro`, `created_at`, `updated_at`) VALUES
 (1, 3, 1, 2, 1, NULL, NULL, NULL, 'SIN ENTREGAR', 'NO', '2023-10-28', '2023-10-28 04:01:37', '2023-10-28 04:01:37'),
-(2, 12, 2, 2, 1, NULL, NULL, NULL, 'SIN ENTREGAR', 'NO', '2023-10-28', '2023-10-28 04:01:37', '2023-10-28 04:01:37');
+(2, 12, 2, 2, 1, NULL, NULL, NULL, 'SIN ENTREGAR', 'NO', '2023-10-28', '2023-10-28 04:01:37', '2023-10-28 04:01:37'),
+(3, 12, 2, 2, 2, NULL, NULL, NULL, 'SIN ENTREGAR', 'NO', '2023-10-28', '2023-10-28 14:36:00', '2023-10-28 14:36:00');
 
 -- --------------------------------------------------------
 
@@ -482,7 +486,17 @@ INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `dato
 (10, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:43:39<br/>', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS MODIFICADO<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:43:45<br/>', 'TAREAS', '2023-10-27', '23:43:45', '2023-10-28 03:43:45', '2023-10-28 03:43:45'),
 (11, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS MODIFICADO<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:43:45<br/>', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: LINEA 1<br />\r\nLINEA 2<br />\r\nLINEA 4<br/>fecha_asignacion: 2023-10-27<br/>fecha_limite: 2023-10-27<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-27<br/>created_at: 2023-10-27 23:33:24<br/>updated_at: 2023-10-27 23:43:49<br/>', 'TAREAS', '2023-10-27', '23:43:49', '2023-10-28 03:43:49', '2023-10-28 03:43:49'),
 (14, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...<br/>fecha_asignacion: 2023-10-28<br/>fecha_limite: 2023-10-28<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 00:01:37<br/>updated_at: 2023-10-28 00:01:37<br/>', NULL, 'TAREAS', '2023-10-28', '00:01:37', '2023-10-28 04:01:37', '2023-10-28 04:01:37'),
-(15, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...<br/>fecha_asignacion: 2023-10-28<br/>fecha_limite: 2023-10-28<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 00:01:37<br/>updated_at: 2023-10-28 00:01:37<br/>', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...<br/>fecha_asignacion: 2023-10-28<br/>fecha_limite: 2023-11-11<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 00:01:37<br/>updated_at: 2023-10-28 00:01:43<br/>', 'TAREAS', '2023-10-28', '00:01:43', '2023-10-28 04:01:43', '2023-10-28 04:01:43');
+(15, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...<br/>fecha_asignacion: 2023-10-28<br/>fecha_limite: 2023-10-28<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 00:01:37<br/>updated_at: 2023-10-28 00:01:37<br/>', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...<br/>fecha_asignacion: 2023-10-28<br/>fecha_limite: 2023-11-11<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 00:01:37<br/>updated_at: 2023-10-28 00:01:43<br/>', 'TAREAS', '2023-10-28', '00:01:43', '2023-10-28 04:01:43', '2023-10-28 04:01:43'),
+(16, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...<br/>fecha_asignacion: 2023-10-28<br/>fecha_limite: 2023-11-11<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 00:01:37<br/>updated_at: 2023-10-28 00:01:43<br/>', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...<br/>fecha_asignacion: 2023-10-28<br/>fecha_limite: 2023-11-11<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 00:01:37<br/>updated_at: 2023-10-28 10:02:03<br/>', 'TAREAS', '2023-10-28', '10:02:03', '2023-10-28 14:02:03', '2023-10-28 14:02:03'),
+(17, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UNA TAREA', 'id: 2<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #2 MATEMATICAS<br/>descripcion: DESCRIPCION DE LA TAREA #2.<br />\r\nMAS DETALLES...<br/>fecha_asignacion: 2023-11-01<br/>fecha_limite: 2023-11-30<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 10:36:00<br/>updated_at: 2023-10-28 10:36:00<br/>', NULL, 'TAREAS', '2023-10-28', '10:36:00', '2023-10-28 14:36:00', '2023-10-28 14:36:00'),
+(19, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UNA CALIFICACIÓN', 'id: 2<br/>inscripcion_id: 1<br/>estudiante_id: 1<br/>gestion: 2023<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>ponderacion: <br/>descripcion: PRUEBA REGISTRO CALIFICACIÓN<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 10:58:57<br/>updated_at: 2023-10-28 10:58:57<br/>', NULL, 'CALIFICACIONES', '2023-10-28', '10:58:57', '2023-10-28 14:58:57', '2023-10-28 14:58:57'),
+(20, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA CALIFICACIÓN', 'id: 2<br/>inscripcion_id: 1<br/>estudiante_id: 1<br/>gestion: 2023<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>ponderacion: 0<br/>descripcion: PRUEBA REGISTRO CALIFICACIÓN<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 10:58:57<br/>updated_at: 2023-10-28 10:58:57<br/>', 'id: 2<br/>inscripcion_id: 1<br/>estudiante_id: 1<br/>gestion: 2023<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>ponderacion: 90<br/>descripcion: PRUEBA REGISTRO CALIFICACIÓN MODIFICADO<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 10:58:57<br/>updated_at: 2023-10-28 11:03:31<br/>', 'CALIFICACIONES', '2023-10-28', '11:03:31', '2023-10-28 15:03:31', '2023-10-28 15:03:31'),
+(21, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA CALIFICACIÓN', 'id: 2<br/>inscripcion_id: 1<br/>estudiante_id: 1<br/>gestion: 2023<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>ponderacion: 90<br/>descripcion: PRUEBA REGISTRO CALIFICACIÓN MODIFICADO<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 10:58:57<br/>updated_at: 2023-10-28 11:03:31<br/>', 'id: 2<br/>inscripcion_id: 1<br/>estudiante_id: 1<br/>gestion: 2023<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>ponderacion: 90<br/>descripcion: PRUEBA REGISTRO CALIFICACIÓN MODIFICADO<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 10:58:57<br/>updated_at: 2023-10-28 11:03:31<br/>', 'CALIFICACIONES', '2023-10-28', '11:09:21', '2023-10-28 15:09:21', '2023-10-28 15:09:21'),
+(22, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA CALIFICACIÓN', 'id: 2<br/>inscripcion_id: 1<br/>estudiante_id: 1<br/>gestion: 2023<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>ponderacion: 90<br/>descripcion: PRUEBA REGISTRO CALIFICACIÓN MODIFICADO<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 10:58:57<br/>updated_at: 2023-10-28 11:03:31<br/>', 'id: 2<br/>inscripcion_id: 1<br/>estudiante_id: 1<br/>gestion: 2023<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>ponderacion: 80<br/>descripcion: PRUEBA REGISTRO CALIFICACIÓN MODIFICADO<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 10:58:57<br/>updated_at: 2023-10-28 11:09:25<br/>', 'CALIFICACIONES', '2023-10-28', '11:09:25', '2023-10-28 15:09:25', '2023-10-28 15:09:25'),
+(23, 6, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA CALIFICACIÓN', 'id: 2<br/>inscripcion_id: 1<br/>estudiante_id: 1<br/>gestion: 2023<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>ponderacion: 80<br/>descripcion: PRUEBA REGISTRO CALIFICACIÓN MODIFICADO<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 10:58:57<br/>updated_at: 2023-10-28 11:09:25<br/>', 'id: 2<br/>inscripcion_id: 1<br/>estudiante_id: 1<br/>gestion: 2023<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>ponderacion: 80<br/>descripcion: PRUEBA REGISTRO CALIFICACIÓN MODIFICADO<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 10:58:57<br/>updated_at: 2023-10-28 11:09:25<br/>', 'CALIFICACIONES', '2023-10-28', '11:09:31', '2023-10-28 15:09:31', '2023-10-28 15:09:31'),
+(24, 6, 'ELIMINACIÓN', 'EL USUARIO  ELIMINÓ UNA CALIFICACIÓN', 'id: 2<br/>inscripcion_id: 1<br/>estudiante_id: 1<br/>gestion: 2023<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>ponderacion: 80<br/>descripcion: PRUEBA REGISTRO CALIFICACIÓN MODIFICADO<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 10:58:57<br/>updated_at: 2023-10-28 11:09:25<br/>', NULL, 'CALIFICACIONES', '2023-10-28', '11:11:51', '2023-10-28 15:11:51', '2023-10-28 15:11:51'),
+(25, 6, 'ELIMINACIÓN', 'EL USUARIO  ELIMINÓ UNA TAREA', 'id: 2<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #2 MATEMATICAS<br/>descripcion: DESCRIPCION DE LA TAREA #2.<br />\r\nMAS DETALLES...<br/>fecha_asignacion: 2023-11-01<br/>fecha_limite: 2023-11-30<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 10:36:00<br/>updated_at: 2023-10-28 10:36:00<br/>', NULL, 'TAREAS', '2023-10-28', '11:12:34', '2023-10-28 15:12:34', '2023-10-28 15:12:34'),
+(26, 6, 'ELIMINACIÓN', 'EL USUARIO  ELIMINÓ UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...<br/>fecha_asignacion: 2023-10-28<br/>fecha_limite: 2023-11-11<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 00:01:37<br/>updated_at: 2023-10-28 10:02:03<br/>', NULL, 'TAREAS', '2023-10-28', '11:12:58', '2023-10-28 15:12:58', '2023-10-28 15:12:58');
 
 -- --------------------------------------------------------
 
@@ -510,7 +524,7 @@ CREATE TABLE `inscripcions` (
 --
 
 INSERT INTO `inscripcions` (`id`, `estudiante_id`, `nivel`, `grado`, `paralelo_id`, `turno`, `gestion`, `estado`, `status`, `fecha_registro`, `created_at`, `updated_at`) VALUES
-(1, 1, 'SECUNDARIA', '2', 3, 'MAÑANA', 2023, 'REPROBADO', 1, '2023-09-20', '2023-09-21 01:53:27', '2023-10-28 04:03:08'),
+(1, 1, 'SECUNDARIA', '1', 3, 'MAÑANA', 2023, 'REPROBADO', 1, '2023-09-20', '2023-09-21 01:53:27', '2023-10-28 14:46:25'),
 (2, 3, 'SECUNDARIA', '1', 3, 'MAÑANA', 2023, 'REPROBADO', 1, '2023-09-21', '2023-09-21 14:22:04', '2023-09-21 14:22:04');
 
 -- --------------------------------------------------------
@@ -642,13 +656,6 @@ CREATE TABLE `notificacions` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `notificacions`
---
-
-INSERT INTO `notificacions` (`id`, `registro_id`, `modulo`, `descripcion`, `created_at`, `updated_at`) VALUES
-(1, 1, 'tarea', 'SE ASIGNÓ UNA TAREA EN LA MATERIA DE MATEMÁTICAS', '2023-10-28 04:01:37', '2023-10-28 04:01:37');
-
 -- --------------------------------------------------------
 
 --
@@ -663,14 +670,6 @@ CREATE TABLE `notificacion_users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `notificacion_users`
---
-
-INSERT INTO `notificacion_users` (`id`, `notificacion_id`, `user_id`, `visto`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 0, '2023-10-28 04:01:37', '2023-10-28 04:01:37'),
-(2, 1, 12, 0, '2023-10-28 04:01:37', '2023-10-28 04:01:37');
 
 -- --------------------------------------------------------
 
@@ -955,13 +954,6 @@ CREATE TABLE `tareas` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `tareas`
---
-
-INSERT INTO `tareas` (`id`, `user_id`, `materia_id`, `profesor_materia_id`, `gestion`, `nombre`, `descripcion`, `fecha_asignacion`, `fecha_limite`, `estado`, `fecha_registro`, `created_at`, `updated_at`) VALUES
-(1, 6, 2, 1, 2023, 'TAREA #1 MATEMATICAS', 'DESCRIPCION TAREA.<br />\r\nOTRA DESCRIPCION TAREA...', '2023-10-28', '2023-11-11', 'VIGENTE', '2023-10-28', '2023-10-28 04:01:37', '2023-10-28 04:01:43');
-
 -- --------------------------------------------------------
 
 --
@@ -975,14 +967,6 @@ CREATE TABLE `tarea_archivos` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `tarea_archivos`
---
-
-INSERT INTO `tarea_archivos` (`id`, `tarea_id`, `link`, `created_at`, `updated_at`) VALUES
-(1, 1, 'link #1', '2023-10-28 04:01:37', '2023-10-28 04:01:37'),
-(2, 1, 'link #2', '2023-10-28 04:01:37', '2023-10-28 04:01:37');
 
 -- --------------------------------------------------------
 
@@ -1278,7 +1262,7 @@ ALTER TABLE `areas`
 -- AUTO_INCREMENT de la tabla `calificacions`
 --
 ALTER TABLE `calificacions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `campos`
@@ -1296,7 +1280,7 @@ ALTER TABLE `comunicados`
 -- AUTO_INCREMENT de la tabla `entregas`
 --
 ALTER TABLE `entregas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `entrega_archivos`
@@ -1314,7 +1298,7 @@ ALTER TABLE `estudiantes`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripcions`
@@ -1344,13 +1328,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `notificacions`
 --
 ALTER TABLE `notificacions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `notificacion_users`
 --
 ALTER TABLE `notificacion_users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `paralelos`
@@ -1404,7 +1388,7 @@ ALTER TABLE `razon_socials`
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tarea_archivos`

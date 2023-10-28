@@ -27,7 +27,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Modificar Área</h3>
+                            <h3 class="card-title">Modificar Tarea</h3>
                         </div>
                         <!-- /.card-header -->
                         {{ Form::model($tarea, ['route' => ['tareas.update', $tarea->id], 'method' => 'put']) }}
@@ -45,8 +45,15 @@
             <!-- /.row -->
         </div>
     </section>
+    <input type="hidden" id="prof" value="{{ $profesor->id }}">
+    <input type="hidden" id="urlMaterias" value="{{ route('materias.materiasCalificacions') }}">
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/tareas/create.js') }}"></script>
+    <script>
+        setTimeout(() => {
+            $("#select_materia").val("{{ $tarea->profesor_materia_id }}");
+        }, 300);
+    </script>
 @endsection

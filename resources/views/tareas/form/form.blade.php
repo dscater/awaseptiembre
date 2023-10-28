@@ -1,8 +1,19 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-2 col-sm-12">
         <div class="form-group">
-            <label>Materia*</label>
-            {{ Form::select('profesor_materia_id', $array_materias, null, ['class' => 'form-control', 'required']) }}
+            <label>Gestión*</label>
+            {{ Form::select('gestion', $array_gestiones, date('Y'), ['class' => 'form-control', 'required', 'id' => 'select_gestion']) }}
+            @if ($errors->has('gestion'))
+                <span class="invalid-feedback" style="color:rgb(185, 7, 7);display:block" role="alert">
+                    <strong>{{ $errors->first('gestion') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+    <div class="col-md-10 col-sm-12">
+        <div class="form-group">
+            <label>Seleccione Materia*</label>
+            {{ Form::select('profesor_materia_id', [], null, ['class' => 'form-control', 'required', 'id' => 'select_materia']) }}
             @if ($errors->has('profesor_materia_id'))
                 <span class="invalid-feedback" style="color:rgb(185, 7, 7);display:block" role="alert">
                     <strong>{{ $errors->first('profesor_materia_id') }}</strong>
