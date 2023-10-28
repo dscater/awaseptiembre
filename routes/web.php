@@ -146,6 +146,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('areas/destroy/{area}', 'AreaController@destroy')->name('areas.destroy');
 
     // MATERIAS
+    Route::get('materias/getMateriasNivelGrado', 'MateriaController@getMateriasNivelGrado')->name('materias.getMateriasNivelGrado');
+    Route::get('materias/getMateriasComunicados', 'MateriaController@getMateriasComunicados')->name('materias.getMateriasComunicados');
     Route::get('materias/getMateriasFiltro', 'MateriaController@getMateriasFiltro')->name('materias.getMateriasFiltro');
 
     Route::get('materias', 'MateriaController@index')->name('materias.index');
@@ -197,7 +199,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('inscripcions/formulario/{inscripcion}', 'InscripcionController@formulario')->name('inscripcions.formulario');
 
     // TAREAS
+    Route::get('tareas/estudiante', 'TareaController@tareas_estudiante')->name('tareas.tareas_estudiante');
     Route::resource("tareas", "TareaController");
+
+    // ENTREGAS
+
+    Route::put('entregas/registra_calificacion/{entrega}', 'EntregaController@registra_calificacion')->name('entregas.registra_calificacion');
+    Route::resource("entregas", "EntregaController");
+
+    // COMUNICADOS
+    Route::resource("comunicados", "ComunicadoController");
+
+    // NOTIFICACIONES
+    Route::resource("notificacions", "NotificacionController");
 
     // CALIFICACIONES
     Route::get('calificacions', 'CalificacionController@index')->name('calificacions.index');
@@ -207,6 +221,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('calificacions/store', 'CalificacionController@store')->name('calificacions.store');
 
     Route::get('calificacions/edit/{calificacion}', 'CalificacionController@edit')->name('calificacions.edit');
+
+    Route::get('calificacions/show/{calificacion}', 'CalificacionController@show')->name('calificacions.show');
 
     Route::put('calificacions/update/{calificacion}', 'CalificacionController@update')->name('calificacions.update');
 
@@ -239,4 +255,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('reportes/grafico_inscripcions', 'ReporteController@grafico_inscripcions')->name('reportes.grafico_inscripcions');
     Route::get('reportes/grafico_inscripcions_datos', 'ReporteController@grafico_inscripcions_datos')->name('reportes.grafico_inscripcions_datos');
+
+    Route::get('reportes/grafico_tareas', 'ReporteController@grafico_tareas')->name('reportes.grafico_tareas');
+    Route::get('reportes/grafico_tareas_datos', 'ReporteController@grafico_tareas_datos')->name('reportes.grafico_tareas_datos');
+
+    Route::get('reportes/calificaciones', 'ReporteController@calificaciones')->name('reportes.calificaciones');
+    Route::get('reportes/comunicados', 'ReporteController@comunicados')->name('reportes.comunicados');
 });

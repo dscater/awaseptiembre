@@ -17,6 +17,7 @@ class CreateEntregasTable extends Migration
             $table->id();
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("inscripcion_id");
+            $table->unsignedBigInteger("profesor_materia_id");
             $table->unsignedBigInteger("materia_id");
             $table->unsignedBigInteger("tarea_id");
             $table->text("observaciones")->nullable();
@@ -25,6 +26,7 @@ class CreateEntregasTable extends Migration
             $table->string("estado", 155);
             $table->string("enviado", 155);
             $table->date("fecha_registro")->nullable();
+            $table->integer("activo");
             $table->timestamps();
         });
     }

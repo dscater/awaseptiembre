@@ -5,7 +5,6 @@
 @endsection
 
 @section('sidebar-collapse')
-    sidebar-collapse
 @endsection
 
 @section('content')
@@ -30,10 +29,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <a href="{{ route('calificacions.create') }}" class="btn btn-info"><i class="fa fa-plus"></i>
-                                Nuevo</a>
-                        </div>
+                        @if (Auth::user()->tipo == 'PROFESOR')
+                            <div class="card-header">
+                                <a href="{{ route('calificacions.create') }}" class="btn btn-info"><i
+                                        class="fa fa-plus"></i>
+                                    Nuevo</a>
+                            </div>
+                        @endif
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="example2" class="table data-table table-bordered table-hover">
@@ -61,6 +63,9 @@
                                             <td>{!! $calificacion->descripcion !!}</td>
                                             <td>{{ $calificacion->fecha_registro }}</td>
                                             <td class="btns-opciones">
+                                                <a href="{{ route('calificacions.show', $calificacion->id) }}"
+                                                    class="evaluar"><i class="fa fa-eye" data-toggle="tooltip"
+                                                        data-placement="left" title="Ver"></i></a>
                                                 @if (Auth::user()->tipo == 'ADMINISTRADOR' || Auth::user()->tipo == 'PROFESOR')
                                                     <a href="{{ route('calificacions.edit', $calificacion->id) }}"
                                                         class="modificar"><i class="fa fa-edit" data-toggle="tooltip"
@@ -107,6 +112,9 @@
 
 
         $('table.data-table').DataTable({
+            order: [
+                [0, "desc"]
+            ],
             columns: [{
                     width: "5%"
                 },

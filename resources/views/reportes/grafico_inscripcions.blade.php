@@ -233,7 +233,7 @@
                             enabled: false
                         },
                         tooltip: {
-                            pointFormat: 'Population in 2021: <b>{point.y:.1f} millions</b>'
+                            pointFormat: '<b>{point.y:.0f} Estudiantes</b>'
                         },
                         series: [{
                             name: 'Population',

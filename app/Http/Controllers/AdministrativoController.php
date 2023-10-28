@@ -190,13 +190,11 @@ class AdministrativoController extends Controller
                 $nuevo_usuario->password = Hash::make($request->ci);
                 $nuevo_usuario->tipo = $request->tipo;
                 $nuevo_usuario->foto = $usuario->foto;
-                $nuevo_usuario->user->foto = $usuario->foto;
                 $nuevo_usuario->codigo = $nro_codigo;
                 $nuevo_usuario->estado = 1;
                 $nuevo_usuario->save();
                 $usuario->user_id = $nuevo_usuario->id;
                 $usuario->save();
-                $usuario->user->save();
             }
         } else {
             if ($usuario->user) {

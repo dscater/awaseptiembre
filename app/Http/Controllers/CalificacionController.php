@@ -44,6 +44,14 @@ class CalificacionController extends Controller
                 ->pluck("id");
             $calificacions = Calificacion::whereIn("profesor_materia_id", $id_profesor_materias)->orderBy("id", "desc")->get();
         }
+        if (Auth::user()->tipo == "ESTUDIANTE") {
+            $calificacions = Calificacion::select("calificacions.*")
+                ->join("notificacions", "notificacions.registro_id", "=", "calificacions.id")
+                ->join("notificacion_users", "notificacion_users.notificacion_id", "=", "notificacions.id")
+                ->where("notificacions.modulo", "calificacion")
+                ->where("notificacion_users.user_id", Auth::user()->id)
+                ->orderBy("id", "desc")->get();
+        }
         return view('calificacions.index', compact('calificacions'));
     }
 
@@ -139,6 +147,20 @@ class CalificacionController extends Controller
         return view('calificacions.edit', compact('calificacion', 'array_gestiones', 'profesor'));
     }
 
+    public function show(Calificacion $calificacion)
+    {
+        if (Auth::user()->tipo == "ESTUDIANTE") {
+            $notificacion_user = NotificacionUser::select("notificacion_users.*")
+                ->join("notificacions", "notificacions.id", "=", "notificacion_users.notificacion_id")
+                ->where("notificacions.modulo", "calificacion")
+                ->where("notificacion_users.user_id", Auth::user()->id)
+                ->where("notificacions.registro_id", $calificacion->id)
+                ->orderBy("id", "desc")->get()->first();
+            $notificacion_user->visto = 1;
+            $notificacion_user->save();
+        }
+        return view('calificacions.show', compact('calificacion'));
+    }
 
     public function update(Calificacion $calificacion, Request $request)
     {

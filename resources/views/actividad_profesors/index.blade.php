@@ -155,6 +155,10 @@
                 fecha.val($(this).attr("data-fecha"));
                 descripcion.val($(this).attr("data-descripcion"));
                 observacion.val($(this).attr("data-observacion"));
+                setTimeout(() => {
+                    ajustarTamaño(descripcion[0]);
+                    ajustarTamaño(observacion[0]);
+                }, 300);
 
                 btnRegistraActividad.text("Actualizar");
                 $("#txtTituloActividad").html("Modificar actividad");

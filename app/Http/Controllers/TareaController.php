@@ -38,11 +38,54 @@ class TareaController extends Controller
 
     public function index()
     {
+        $fecha_actual = date("Y-m-d");
+        DB::update("UPDATE tareas SET estado='VENCIDO' WHERE fecha_limite < $fecha_actual");
+
         $tareas = Tarea::orderBy("id", "desc")->get();
         if (Auth::user()->tipo == "PROFESOR") {
-            $tareas = Tarea::where("user_id", Auth::user()->id)->orderBy("id", "desc")->get();
+            $id_profesor_materias = ProfesorMateria::where('profesor_id', Auth::user()->profesor->id)
+                ->pluck("id");
+            $tareas = Tarea::whereIn("profesor_materia_id", $id_profesor_materias)->orderBy("id", "desc")->get();
         }
         return view("tareas.index", compact("tareas"));
+    }
+
+    public function tareas_estudiante(Request $request)
+    {
+        $fecha_actual = date("Y-m-d");
+        DB::update("UPDATE tareas SET estado='VENCIDO' WHERE fecha_limite < '$fecha_actual'");
+        if ($request->ajax()) {
+            $gestion =  $request->gestion;
+            $inscripcion = Inscripcion::where("status", 1)
+                ->where("gestion", $gestion)
+                ->where("estudiante_id", Auth::user()->estudiante->id)
+                ->get()->first();
+            $html = "";
+            if ($inscripcion) {
+                $entregas = Entrega::select("entregas.*")
+                    ->join("tareas", "tareas.id", "=", "entregas.tarea_id")
+                    ->where("inscripcion_id", $inscripcion->id)
+                    ->where("tareas.gestion", $gestion)
+                    ->orderBy("id", "desc")
+                    ->get();
+                $html = view("tareas.parcial.tareas_entregas", compact("entregas"))->render();
+            }
+            return response()->JSON($html);
+        }
+        $gestion_min = Inscripcion::min('gestion');
+        $gestion_max = Inscripcion::max('gestion');
+
+        $array_gestiones = [];
+        if ($gestion_min) {
+            $array_gestiones[''] = 'Seleccione...';
+            for ($i = (int)$gestion_min; $i <= (int)$gestion_max; $i++) {
+                $array_gestiones[$i] = $i;
+            }
+        } else {
+            $array_gestiones = [date("Y")];
+        }
+
+        return view("tareas.tareas_estudiante", compact("array_gestiones"));
     }
 
     public function create()
@@ -122,11 +165,13 @@ class TareaController extends Controller
                 Entrega::create([
                     "user_id" => $i->estudiante->user->id,
                     "inscripcion_id" => $i->id,
+                    "profesor_materia_id" => $profesor_materia->id,
                     "materia_id" => $nueva_tarea->materia_id,
                     "tarea_id" => $nueva_tarea->id,
                     "estado" => "SIN ENTREGAR",
                     "enviado" => "NO",
-                    "fecha_registro" => date("Y-m-d")
+                    "fecha_registro" => date("Y-m-d"),
+                    "activo" => 0,
                 ]);
                 // registrar notificacion-user
                 NotificacionUser::create([
@@ -146,6 +191,16 @@ class TareaController extends Controller
 
     public function show(Tarea $tarea)
     {
+        if (Auth::user()->tipo == "ESTUDIANTE") {
+            $notificacion_user = NotificacionUser::select("notificacion_users.*")
+                ->join("notificacions", "notificacions.id", "=", "notificacion_users.notificacion_id")
+                ->where("notificacions.modulo", "tarea")
+                ->where("notificacion_users.user_id", Auth::user()->id)
+                ->where("notificacions.registro_id", $tarea->id)
+                ->orderBy("id", "desc")->get()->first();
+            $notificacion_user->visto = 1;
+            $notificacion_user->save();
+        }
         return view("tareas.show", compact("tarea"));
     }
 
@@ -238,6 +293,7 @@ class TareaController extends Controller
                 $notificacion->delete();
             }
             $tarea->tarea_archivos()->delete();
+            $tarea->entregas()->delete();
             $datos_original = HistorialAccion::getDetalleRegistro($tarea, "tareas");
             $tarea->delete();
             HistorialAccion::create([

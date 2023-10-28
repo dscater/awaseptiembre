@@ -52,6 +52,4 @@
      </div>
 
  </div>
-
- <input type="hidden" id="urlInfoIngresosEconomicos" value="{{ route('pago_estudiantes.ingresos_economicos') }}">
  <input type="hidden" id="urlInfoCantidadEstudiantes" value="{{ route('inscripcions.cantidad_estudiantes') }}">

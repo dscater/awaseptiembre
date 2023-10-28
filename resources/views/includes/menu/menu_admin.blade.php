@@ -36,24 +36,22 @@
 </li>
 
 <li class="nav-item">
-    <a href="{{ route('actividad_profesors.lista') }}"
-        class="nav-link {{ request()->is('actividad_profesors*') ? 'active' : '' }}">
-        <i class="nav-icon fa fa-clipboard-check"></i>
-        <p>Calificaciones</p>
-    </a>
-</li>
-
-<li class="nav-item">
-    <a href="{{ route('actividad_profesors.lista') }}"
-        class="nav-link {{ request()->is('actividad_profesors*') ? 'active' : '' }}">
+    <a href="{{ route('entregas.index') }}" class="nav-link {{ request()->is('entregas*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-clipboard-list"></i>
         <p>Entregas</p>
     </a>
 </li>
 
 <li class="nav-item">
-    <a href="{{ route('actividad_profesors.lista') }}"
-        class="nav-link {{ request()->is('actividad_profesors*') ? 'active' : '' }}">
+    <a href="{{ route('calificacions.index') }}"
+        class="nav-link {{ request()->is('calificacions*') ? 'active' : '' }}">
+        <i class="nav-icon fa fa-clipboard-check"></i>
+        <p>Calificaciones</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('comunicados.index') }}" class="nav-link {{ request()->is('comunicados*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-bullhorn"></i>
         <p>Comunicados</p>
     </a>
@@ -93,14 +91,14 @@
 <li class="nav-item @if (request()->is('inscripcions*') || request()->is('paralelos*')) menu-is-opening menu-open active @endif">
     <a href="#" class="nav-link">
         <i class="nav-icon far fa-list-alt"></i>
-        <p>Cantidad de Estudiantes <i class="fas fa-angle-left right"></i></p>
+        <p>Materias de Estudiantes <i class="fas fa-angle-left right"></i></p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
             <a href="{{ route('inscripcions.index') }}"
                 class="nav-link @if (request()->is('inscripcions*')) active @endif">
                 <i class="nav-icon far fa-circle"></i>
-                <p>Cantidad de Estudiantes</p>
+                <p>Materias de Estudiantes</p>
             </a>
         </li>
         <li class="nav-item">

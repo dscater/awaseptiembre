@@ -9,9 +9,13 @@ use App\Paralelo;
 use App\Materia;
 use App\Calificacion;
 use App\CalificacionTrimestre;
+use App\HistorialAccion;
 use App\ProfesorMateria;
 use App\TrimestreActividad;
 use Barryvdh\DomPDF\Facade as PDF;
+use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class InscripcionController extends Controller
 {
@@ -26,7 +30,7 @@ class InscripcionController extends Controller
         $estudiantes = Estudiante::select('estudiantes.*')
             ->where('estudiantes.estado', 1)
             ->get();
-        $paralelos = paralelo::all();
+        $paralelos = Paralelo::all();
 
         $array_estudiantes[''] = 'Seleccione...';
         $array_paralelos[''] = 'Seleccione...';
@@ -42,60 +46,54 @@ class InscripcionController extends Controller
 
     public function store(Request $request)
     {
-        $request['fecha_registro'] = date('Y-m-d');
-        $request['estado'] = 'REPROBADO';
-        $request['status'] = 1;
-        $nueva_inscripcion = new Inscripcion(array_map('mb_strtoupper', $request->all()));
+        DB::beginTransaction();
+        try {
+            $existe = Inscripcion::where("gestion", $request->gestion)
+                ->where("estudiante_id", $request->estudiante_id)
+                ->where("status", 1)
+                ->get()->first();
 
-        // REGISTRAR LAS MATERIAS ASIGNADAS AL GRADO Y NIVEL
-        // Materia
-        // MateriaGrado
-        $materia_grados = Materia::select('materias.*')
-            ->join('materia_grados', 'materia_grados.materia_id', '=', 'materias.id')
-            ->where('materias.nivel', $nueva_inscripcion->nivel)
-            ->where('grado', $nueva_inscripcion->grado)
-            ->get();
+            if ($existe) {
+                throw new Exception("El estudiante ya se encuentra registro en la gestión: " . $request->gestion);
+            }
 
-        if (count($materia_grados) == 0) {
-            return redirect()->route('inscripcions.index')->with('error', 'Error. No hay materias asignadas al NIVEL y GRADO que seleccionó. Comuniquese con un Administrador/Secretaria');
+            $request['fecha_registro'] = date('Y-m-d');
+            $request['estado'] = 'REPROBADO';
+            $request['status'] = 1;
+            $nueva_inscripcion = new Inscripcion(array_map('mb_strtoupper', $request->all()));
+
+            $datos_original = HistorialAccion::getDetalleRegistro($nueva_inscripcion, "inscripcions");
+            HistorialAccion::create([
+                'user_id' => Auth::user()->id,
+                'accion' => 'CREACIÓN',
+                'descripcion' => 'EL USUARIO ' . Auth::user()->usuario . ' REGISTRO UNA INSCRIPCIÓN',
+                'datos_original' => $datos_original,
+                'modulo' => 'INSCRIPCIONES/CANTIDAD ESTUDIANTES',
+                'fecha' => date('Y-m-d'),
+                'hora' => date('H:i:s')
+            ]);
+
+            // REGISTRAR LAS MATERIAS ASIGNADAS AL GRADO Y NIVEL
+            // Materia
+            // MateriaGrado
+            $materia_grados = Materia::select('materias.*')
+                ->join('materia_grados', 'materia_grados.materia_id', '=', 'materias.id')
+                ->where('materias.nivel', $nueva_inscripcion->nivel)
+                ->where('grado', $nueva_inscripcion->grado)
+                ->get();
+
+            if (count($materia_grados) == 0) {
+                throw new Exception("No hay materias asignadas al NIVEL y GRADO que seleccionó. Comuniquese con un Administrador/Secretaria");
+                // return redirect()->route('inscripcions.index')->with('error', 'Error. No hay materias asignadas al NIVEL y GRADO que seleccionó. Comuniquese con un Administrador/Secretaria');
+            }
+
+            $nueva_inscripcion->save();
+            DB::commit();
+            return redirect()->route('inscripcions.index')->with('bien', 'Registro realizado con éxito');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route("inscripcions.index")->with("error_swal", $e->getMessage());
         }
-
-        $nueva_inscripcion->save();
-        // foreach ($materia_grados as $materia) {
-        //     //Registrar Materia En la inscripcion
-        //     $nueva_calificacion = Calificacion::create([
-        //         'inscripcion_id' => $nueva_inscripcion->id,
-        //         'materia_id' => $materia->id,
-        //         'notal_final' => 0,
-        //         'estado' => 'REPROBADO',
-        //         'fecha_registro' => date('Y-m-d')
-        //     ]);
-
-        //     for ($i = 1; $i <= 3; $i++) {
-        //         //Registrar los Trimestres Por Materia
-        //         $calificacion_trimestre = CalificacionTrimestre::create([
-        //             'calificacion_id' => $nueva_calificacion->id,
-        //             'trimestre' => $i
-        //         ]);
-
-        //         // Registrar las Areas(4) y sus 6 actividades
-        //         for ($j = 1; $j <= 4; $j++) {
-        //             TrimestreActividad::create([
-        //                 'ct_id' => $calificacion_trimestre->id,
-        //                 'area' => $j,
-        //                 'a1' => 0,
-        //                 'a2' => 0,
-        //                 'a3' => 0,
-        //                 'a4' => 0,
-        //                 'a5' => 0,
-        //                 'a6' => 0,
-        //                 'promedio' => 0
-        //             ]);
-        //         }
-        //     }
-        // }
-
-        return redirect()->route('inscripcions.index')->with('bien', 'Registro realizado con éxito');
     }
 
     public function edit(Inscripcion $inscripcion)
@@ -103,7 +101,7 @@ class InscripcionController extends Controller
         $estudiantes = Estudiante::select('estudiantes.*')
             ->where('estudiantes.estado', 1)
             ->get();
-        $paralelos = paralelo::all();
+        $paralelos = Paralelo::all();
 
         $array_estudiantes[''] = 'Seleccione...';
         $array_paralelos[''] = 'Seleccione...';
@@ -120,8 +118,27 @@ class InscripcionController extends Controller
 
     public function update(Inscripcion $inscripcion, Request $request)
     {
-        $inscripcion->update(array_map('mb_strtoupper', $request->all()));
-        return redirect()->route('inscripcions.index')->with('bien', 'Registro modificado con éxito');
+        DB::beginTransaction();
+        try {
+            $datos_original = HistorialAccion::getDetalleRegistro($inscripcion, "inscripcions");
+            $inscripcion->update(array_map('mb_strtoupper', $request->all()));
+            $datos_nuevo = HistorialAccion::getDetalleRegistro($inscripcion, "inscripcions");
+            HistorialAccion::create([
+                'user_id' => Auth::user()->id,
+                'accion' => 'MODIFICACIÓN',
+                'descripcion' => 'EL USUARIO ' . Auth::user()->usuario . ' MODIFICÓ UNA INSCRIPCIÓN',
+                'datos_original' => $datos_original,
+                'datos_nuevo' => $datos_nuevo,
+                'modulo' => 'INSCRIPCIONES/CANTIDAD ESTUDIANTES',
+                'fecha' => date('Y-m-d'),
+                'hora' => date('H:i:s')
+            ]);
+            DB::commit();
+            return redirect()->route('inscripcions.index')->with('bien', 'Registro modificado con éxito');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route("inscripcions.index")->with("error_swal", $e->getMessage());
+        }
     }
 
     public function show(Inscripcion $inscripcion)
@@ -131,9 +148,30 @@ class InscripcionController extends Controller
 
     public function destroy(Inscripcion $inscripcion)
     {
-        $inscripcion->status = 0;
-        $inscripcion->save();
-        return redirect()->route('inscripcions.index')->with('bien', 'Registro eliminado correctamente');
+        DB::beginTransaction();
+        try {
+            $datos_original = HistorialAccion::getDetalleRegistro($inscripcion, "inscripcions");
+            $inscripcion->status = 0;
+            $inscripcion->save();
+
+            $datos_nuevo = HistorialAccion::getDetalleRegistro($inscripcion, "inscripcions");
+            HistorialAccion::create([
+                'user_id' => Auth::user()->id,
+                'accion' => 'ELIMINACIÓN',
+                'descripcion' => 'EL USUARIO ' . Auth::user()->usuario . ' ELIMINÓ UNA INSCRIPCIÓN',
+                'datos_original' => $datos_original,
+                'datos_nuevo' => $datos_nuevo,
+                'modulo' => 'INSCRIPCIONES/CANTIDAD ESTUDIANTES',
+                'fecha' => date('Y-m-d'),
+                'hora' => date('H:i:s')
+            ]);
+            DB::commit();
+
+            return redirect()->route('inscripcions.index')->with('bien', 'Registro eliminado correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route("inscripcions.index")->with("error_swal", $e->getMessage());
+        }
     }
 
     public function cantidad_estudiantes(Request $request)

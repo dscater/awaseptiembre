@@ -65,17 +65,12 @@
     @include('reportes.modal.m_usuarios')
     @include('reportes.modal.m_personal')
     @include('reportes.modal.m_kardex_personal')
-    @include('reportes.modal.m_boleta_calificaciones')
-    @include('reportes.modal.m_boletin')
-    @include('reportes.modal.m_centralizador_calificacions')
-    @include('reportes.modal.m_historial_academico')
     @include('reportes.modal.m_asignacion_materias')
-    @include('reportes.modal.m_pagos_estudiantes')
-    @include('reportes.modal.m_ingresos_economicos')
-    @include('reportes.modal.m_asistencias')
     @include('reportes.modal.m_actividad_profesors')
-    @include('reportes.modal.m_desempeno_academico')
     @include('reportes.modal.m_notificacions')
+    @include('reportes.modal.m_calificaciones')
+    @include('reportes.modal.m_comunicados')
+    
 @endsection
 
 @section('scripts')

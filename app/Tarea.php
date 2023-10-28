@@ -24,6 +24,11 @@ class Tarea extends Model
         return $this->hasMany(TareaArchivo::class, 'tarea_id');
     }
 
+    public function entregas()
+    {
+        return $this->hasMany(Entrega::class, 'tarea_id');
+    }
+
     public function materia()
     {
         return $this->belongsTo(Materia::class, 'materia_id');

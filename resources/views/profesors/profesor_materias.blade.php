@@ -111,6 +111,31 @@
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Materias asignadas - Gestión <span id="txt_gestion"></span></h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr class="bg-blue">
+                                                <th>Nº</th>
+                                                <th>Nivel</th>
+                                                <th>Materia</th>
+                                                <th>Grado</th>
+                                                <th>Paralelo</th>
+                                                <th>Turno</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="contenedor_materias_profesor">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.col -->
             </div>
@@ -120,6 +145,8 @@
 
     <input type="hidden" id="prof" value="{{ $profesor->id }}">
     <input type="hidden" id="urlMaterias" value="{{ route('profesor_materias.getMateriasDisponibles') }}">
+    <input type="hidden" id="urlMateriaActuales"
+        value="{{ route('profesor_materias.getInfoMateriasAsignadas', $profesor->id) }}">
     <input type="hidden" id="urlStoreProfesorMateria" value="{{ route('profesor_materias.store', $profesor->id) }}">
 
     <input type="hidden" id="urlDeleteProfesorMateria" value="{{ route('profesor_materias.destroy', $profesor->id) }}">

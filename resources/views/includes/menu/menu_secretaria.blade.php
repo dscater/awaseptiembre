@@ -28,6 +28,35 @@
     </a>
 </li>
 
+<li class="nav-item">
+    <a href="{{ route('tareas.index') }}" class="nav-link {{ request()->is('tareas*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-list-alt"></i>
+        <p>Tareas</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('entregas.index') }}" class="nav-link {{ request()->is('entregas*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-clipboard-list"></i>
+        <p>Entregas</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('calificacions.index') }}"
+        class="nav-link {{ request()->is('calificacions*') ? 'active' : '' }}">
+        <i class="nav-icon fa fa-clipboard-check"></i>
+        <p>Calificaciones</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('comunicados.index') }}" class="nav-link {{ request()->is('comunicados*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-bullhorn"></i>
+        <p>Comunicados</p>
+    </a>
+</li>
+
 <li class="nav-item @if (request()->is('materias*') ||
         request()->is('areas*') ||
         request()->is('campos*') ||
@@ -62,14 +91,14 @@
 <li class="nav-item @if (request()->is('inscripcions*') || request()->is('paralelos*')) menu-is-opening menu-open active @endif">
     <a href="#" class="nav-link">
         <i class="nav-icon far fa-list-alt"></i>
-        <p>Inscripcions <i class="fas fa-angle-left right"></i></p>
+        <p>Cantidad de Estudiantes <i class="fas fa-angle-left right"></i></p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
             <a href="{{ route('inscripcions.index') }}"
                 class="nav-link @if (request()->is('inscripcions*')) active @endif">
                 <i class="nav-icon far fa-circle"></i>
-                <p>Inscripcions</p>
+                <p>Cantidad de Estudiantes</p>
             </a>
         </li>
         <li class="nav-item">
@@ -85,5 +114,11 @@
     <a href="{{ route('reportes.index') }}" class="nav-link {{ request()->is('reportes*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-chart-pie"></i>
         <p>Reportes</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('razon_social.index') }}" class="nav-link {{ request()->is('razon_social*') ? 'active' : '' }}">
+        <i class="nav-icon fa fa-hospital"></i>
+        <p>Razón social</p>
     </a>
 </li>

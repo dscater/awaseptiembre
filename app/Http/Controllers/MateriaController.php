@@ -336,4 +336,34 @@ class MateriaController extends Controller
         }
         return response()->JSON($option);
     }
+
+    public function getMateriasNivelGrado(Request $request)
+    {
+        $nivel = $request->nivel;
+        $grado = $request->grado;
+
+        $materias = Materia::select("materias.*")
+            ->join("materia_grados", "materia_grados.materia_id", "=", "materias.id")
+            ->where("grado", $grado)
+            ->where("materias.nivel", $nivel)
+            ->get();
+
+        $option = "";
+        if (count($materias) > 0) {
+            $option = '<option value="">Seleccione...</option>';
+            foreach ($materias as $value) {
+                $option .= '<option value="' . $value->id . '">' . $value->nombre . ' | ' . $value->nivel . ' - ' . $grado . '°</option>';
+            }
+        }
+        return response()->JSON($option);
+    }
+
+
+    public function getMateriasComunicados(Request $request)
+    {
+        $gestion = $request->gestion;
+        $nivel = $request->nivel;
+        $grado = $request->grado;
+        $paralelo = $request->paralelo;
+    }
 }

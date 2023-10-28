@@ -23,9 +23,23 @@
 </li>
 
 <li class="nav-item">
+    <a href="{{ route('entregas.index') }}" class="nav-link {{ request()->is('entregas*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-clipboard-list"></i>
+        <p>Entregas</p>
+    </a>
+</li>
+
+<li class="nav-item">
     <a href="{{ route('calificacions.index') }}" class="nav-link {{ request()->is('calificacions*') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-list-alt"></i>
+        <i class="nav-icon fas fa-clipboard-check"></i>
         <p>Administrar calificaciones</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('comunicados.index') }}" class="nav-link {{ request()->is('comunicados*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-bullhorn"></i>
+        <p>Comunicados</p>
     </a>
 </li>
 

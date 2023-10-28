@@ -139,7 +139,7 @@
                     </div>
                 </li> --}}
                 <!-- Notifications Dropdown Menu -->
-                @if (Auth::user()->tipo == 'TUTOR')
+                @if (Auth::user()->tipo == 'ESTUDIANTE' || Auth::user()->tipo == 'PROFESOR')
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-bell"></i>
@@ -358,6 +358,37 @@
             }
         }
 
+
+        @if (session('bien_swal'))
+            swal.fire({
+                title: "Correcto",
+                icon: "success",
+                text: '{{ session('bien_swal') }}',
+                confirmButtonText: "Aceptar",
+                confirmButtonColor: "#bd2130"
+            });
+        @endif
+
+        @if (session('info_swal'))
+            swal.fire({
+                title: "Atención",
+                icon: "info",
+                text: '{{ session('info_swal') }}',
+                confirmButtonText: "Aceptar",
+                confirmButtonColor: "#bd2130"
+            });
+        @endif
+
+        @if (session('error_swal'))
+            swal.fire({
+                title: "Error",
+                icon: "error",
+                text: '{{ session('error_swal') }}',
+                confirmButtonText: "Aceptar",
+                confirmButtonColor: "#bd2130"
+            });
+        @endif
+
         $.extend($.validator.messages, {
             required: "Este campo es obligatorio.",
             maxlength: $.validator.format("El tamaño maximo es de {0} caracteres."),
@@ -386,44 +417,7 @@
             })
         }
     </script>
-    @yield('scripts')
 
-    @if (Auth::user()->tipo == 'TUTOR')
-        <input type="hidden" value="{{ route('desempeno_estudiantes.getNotificaciones') }}"
-            id="urlGetNotificaciones">
-        <script>
-            let nroNotificaciones = $("#nroNotificaciones");
-            let contenedorNotificaciones = $("#contenedorNotificaciones");
-            $(document).ready(function() {
-                getNotificaciones();
-                setInterval(getNotificaciones, 2000);
-            });
-            let ultimo_id = 0;
-
-            function getNotificaciones() {
-                $.ajax({
-                    type: "GET",
-                    url: $("#urlGetNotificaciones").val(),
-                    data: {
-                        ultimo_id: ultimo_id,
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        if (response.no_vistos == 0) {
-                            nroNotificaciones.addClass("oculto");
-                        } else {
-                            nroNotificaciones.removeClass("oculto");
-                            nroNotificaciones.text(response.no_vistos);
-                        }
-                        if (response.html != "") {
-                            contenedorNotificaciones.append(response.html);
-                            ultimo_id = response.ultimo_id;
-                        }
-                    }
-                });
-            }
-        </script>
-    @endif
     <script>
         const textareas = document.querySelectorAll('textarea');
 
@@ -453,6 +447,49 @@
             reemplazarSaltosDeLinea(textarea);
         });
     </script>
+
+    @yield('scripts')
+
+    @if (Auth::user()->tipo == 'ESTUDIANTE' || Auth::user()->tipo == 'PROFESOR')
+        <input type="hidden" value="{{ route('notificacions.index') }}" id="urlGetNotificaciones">
+        <script>
+            let nroNotificaciones = $("#nroNotificaciones");
+            let contenedorNotificaciones = $("#contenedorNotificaciones");
+            $(document).ready(function() {
+                getNotificaciones();
+                setInterval(getNotificaciones, 2000);
+            });
+            let ultimo_id = 0;
+
+            function getNotificaciones() {
+                $.ajax({
+                    type: "GET",
+                    url: $("#urlGetNotificaciones").val(),
+                    data: {
+                        ultimo_id: ultimo_id,
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.no_vistos == 0) {
+                            nroNotificaciones.addClass("oculto");
+                        } else {
+                            nroNotificaciones.removeClass("oculto");
+                            nroNotificaciones.text(response.no_vistos);
+                        }
+                        if (response.html != "") {
+                            let dropdown_item = contenedorNotificaciones.children(".dropdown-item").eq(0);
+                            if (dropdown_item.length > 0) {
+                                dropdown_item.before(response.html);
+                            } else {
+                                contenedorNotificaciones.append(response.html);
+                            }
+                            ultimo_id = response.ultimo_id;
+                        }
+                    }
+                });
+            }
+        </script>
+    @endif
 </body>
 
 </html>

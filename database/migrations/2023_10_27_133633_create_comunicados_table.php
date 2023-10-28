@@ -15,10 +15,13 @@ class CreateComunicadosTable extends Migration
     {
         Schema::create('comunicados', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("user_id");
+            $table->integer("gestion");
             $table->string("nivel");
-            $table->unsignedBigInteger("grado_id");
+            $table->string("grado", 155);
             $table->unsignedBigInteger("materia_id");
             $table->unsignedBigInteger("paralelo_id");
+            $table->string("turno", 155);
             $table->text("descripcion");
             $table->date("fecha_inicio");
             $table->date("fecha_fin");

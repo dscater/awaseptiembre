@@ -47,7 +47,7 @@
         </div>
     </section>
 
-    <input type="hidden" id="prof" value="{{ $profesor->id }}">
+    <input type="hidden" id="prof" value="{{ $profesor ? $profesor->id : '' }}">
     <input type="hidden" id="urlMaterias" value="{{ route('materias.materiasCalificacions') }}">
 @endsection
 

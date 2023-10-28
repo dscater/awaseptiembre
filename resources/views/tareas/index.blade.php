@@ -25,10 +25,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            {{-- <h3 class="card-title"></h3> --}}
-                            <a href="{{ route('tareas.create') }}" class="btn btn-info"><i class="fa fa-plus"></i> Nuevo</a>
-                        </div>
+                        @if (Auth::user()->tipo == 'PROFESOR')
+                            <div class="card-header">
+                                {{-- <h3 class="card-title"></h3> --}}
+                                <a href="{{ route('tareas.create') }}" class="btn btn-info"><i class="fa fa-plus"></i>
+                                    Nuevo</a>
+                            </div>
+                        @endif
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="example2" class="table data-table table-bordered table-hover">
@@ -57,10 +60,15 @@
                                             <td>{!! $tarea->descripcion !!}</td>
                                             <td>{{ $tarea->fecha_asignacion }}</td>
                                             <td>{{ $tarea->fecha_limite }}</td>
-                                            <td>{{ $tarea->estado }}</td>
+                                            <td><span
+                                                    class="text-xs badge {{ $tarea->estado == 'SIN ENTREGAR' ? 'badge-danger' : 'badge-success' }}">{{ $tarea->estado }}</span>
+                                            </td>
                                             <td>{{ $tarea->fecha_registro }}</td>
                                             <td class="btns-opciones">
-                                                @if (Auth::user()->tipo == 'ADMINISTRADOR' || Auth::user()->tipo == 'PROFESOR')
+                                                <a href="{{ route('tareas.show', $tarea->id) }}" class="ir-evaluacion"><i
+                                                        class="fa fa-eye" data-toggle="tooltip" data-placement="left"
+                                                        title="Ver Tarea"></i></a>
+                                                @if (Auth::user()->tipo == 'PROFESOR')
                                                     <a href="{{ route('tareas.edit', $tarea->id) }}" class="modificar"><i
                                                             class="fa fa-edit" data-toggle="tooltip" data-placement="left"
                                                             title="Modificar"></i></a>
@@ -104,6 +112,9 @@
 
 
         $('table.data-table').DataTable({
+            order: [
+                [0, "desc"]
+            ],
             columns: [{
                     width: "5%"
                 },
