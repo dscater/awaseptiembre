@@ -30,60 +30,35 @@
                             <h3 class="card-title">Nuevo correo</h3>
                         </div>
                         <!-- /.card-header -->
-                        {{ Form::open(['route' => 'envio_correos.store', 'method' => 'post']) }}
+                        {{ Form::open(['route' => 'envio_correos.store', 'method' => 'post', 'files' => true]) }}
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label>Tipo de envío</label>
-                                    <select name="tipo" id="tipo" class="form-control">
-                                        <option value="INDIVIDUAL">INDIVIDUAL</option>
-                                        <option value="GRUPAL">GRUPAL</option>
-                                    </select>
-                                </div>
-                            </div>
+                            @if (Auth::user()->tipo == 'PROFESOR')
+                                @include('envio_correos.parcial.profesor')
+                            @else
+                                @include('envio_correos.parcial.normal')
+                            @endif
                             <div class="row">
                                 <div class="col-12">
-                                    <hr>
+                                    <hr class="mt-0">
                                 </div>
                             </div>
-                            {{-- INDIVIDUAL --}}
-                            <div class="row" id="contenedor_individual">
-                                <div class="col-md-12 form-group">
-                                    {{ Form::select('inscripcion_id', $array_estudiantes, null, ['class' => 'form-control select2', 'id' => 'select_inscripcion', 'required']) }}
-                                </div>
-                                <div class="col-12" id="info_estudiante">
-
-                                </div>
-                            </div>
-                            {{-- GRUPAL --}}
-                            <div class="row" id="contenedor_grupal">
-                                <div class="col-md-2 col-sm-12">
+                            <div class="row">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Gestión*</label>
-                                        {{ Form::select('gestion', $array_gestiones, date('Y'), ['class' => 'form-control', 'required', 'id' => 'select_gestion']) }}
-                                        @if ($errors->has('gestion'))
+                                        <label>Mensaje*:</label>
+                                        {{ Form::textarea('texto', null, ['class' => 'form-control', 'required', 'rows' => '1']) }}
+                                        @if ($errors->has('texto'))
                                             <span class="invalid-feedback" style="color:rgb(185, 7, 7);display:block"
                                                 role="alert">
-                                                <strong>{{ $errors->first('gestion') }}</strong>
+                                                <strong>{{ $errors->first('texto') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
-                                @if (Auth::user()->tipo == 'PROFESOR')
-                                    @include('comunicados.parcial.profesor')
-                                @else
-                                    @include('comunicados.parcial.normal')
-                                @endif
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Descripción de Comunicado*</label>
-                                        {{ Form::textarea('descripcion', null, ['class' => 'form-control', 'required', 'rows' => '1']) }}
-                                        @if ($errors->has('descripcion'))
-                                            <span class="invalid-feedback" style="color:rgb(185, 7, 7);display:block"
-                                                role="alert">
-                                                <strong>{{ $errors->first('descripcion') }}</strong>
-                                            </span>
-                                        @endif
+                                        <label>Archivo adjunto:</label>
+                                        <input type="file" name="archivo" id="archivo" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -102,6 +77,8 @@
     <input type="hidden" id="prof" value="{{ $profesor ? $profesor->id : '' }}">
     <input type="hidden" id="urlMaterias" value="{{ route('materias.materiasCalificacions') }}">
     <input type="hidden" value="{{ route('materias.getMateriasNivelGrado') }}" id="urlGetMateriasNivelGrado">
+    <input type="hidden" value="{{ route('estudiantes.info_tutor_correo') }}" id="info_tutor_correo">
+    <input type="hidden" value="{{ route('inscripcions.getEstudianteProfesorMateria') }}" id="estudiantes_materias">
 @endsection
 
 @section('scripts')
@@ -109,7 +86,13 @@
     @if (Auth::user()->tipo == 'PROFESOR')
         <script>
             $(document).ready(function() {
+                $("#select_estudiante").html("");
                 obtieneMaterias();
+                $("#select_gestion").change(obtieneMaterias);
+
+                $("#select_materia").change(function() {
+                    obtieneInscripcions();
+                })
             });
 
             function obtieneMaterias() {
@@ -128,6 +111,30 @@
                     });
                 } else {
                     $("#select_materia").html("");
+                }
+            }
+
+            function obtieneInscripcions() {
+                if ($("#select_materia").val() != '') {
+                    $.ajax({
+                        type: "GET",
+                        url: $("#estudiantes_materias").val(),
+                        data: {
+                            materia: $("#select_materia").val()
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            let options = `<option value="">- Seleccionar Estudiante -</option>`;
+                            response.inscripcions.forEach(elem => {
+                                options +=
+                                    `<option value="${elem.estudiante_id}">${elem.estudiante.full_name}</option>`;
+                            })
+
+                            $("#select_estudiante").html(options);
+                        }
+                    });
+                } else {
+                    $("#select_estudiante").html("");
                 }
             }
         </script>
@@ -160,4 +167,100 @@
             }
         </script>
     @endif
+    <script>
+        let select_tipo = $("#select_tipo");
+        let select_estudiante = $("#select_estudiante");
+        let select_turno = $("#select_turno");
+        let info_estudiante = $("#info_estudiante");
+        let contenedor_individual = $("#contenedor_individual");
+        let contenedor_grupal = $("#contenedor_grupal");
+        let materia_id = $("#materia_id");
+        let select_materia = $("#select_materia");
+        let paralelo_id = $("#paralelo_id");
+        let select_gestion = $("#select_gestion");
+        $(document).ready(function() {
+            watchTipoEnvio();
+            watchInfoEstudiante();
+            select_estudiante.change(function() {
+                watchInfoEstudiante();
+                getEstudianteTutor();
+            })
+            select_tipo.change(watchTipoEnvio);
+        });
+
+        function getEstudianteTutor() {
+            if (select_estudiante.val() != '') {
+                $.ajax({
+                    type: "GET",
+                    url: $("#info_tutor_correo").val(),
+                    data: {
+                        id: select_estudiante.val()
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        info_estudiante.html(response);
+                    }
+                });
+            } else {
+                info_estudiante.html("");
+            }
+        }
+
+        function watchInfoEstudiante() {
+            info_estudiante.show();
+            if (select_tipo.val() == 'GRUPAL') {
+                select_estudiante.val("");
+            }
+            if (select_estudiante.val() == '') {
+                info_estudiante.html("");
+                info_estudiante.hide();
+            }
+        }
+
+        function watchTipoEnvio() {
+            contenedor_grupal.addClass("oculto");
+            contenedor_individual.addClass("oculto");
+
+            if (select_tipo.val() == 'INDIVIDUAL') {
+                select_estudiante.prop("required", true);
+                if (select_gestion) {
+                    select_gestion.removeAttr("required")
+                }
+                if (select_grado) {
+                    select_grado.removeAttr("required")
+                }
+                if (select_turno) {
+                    select_turno.removeAttr("required")
+                }
+                if (materia_id) {
+                    materia_id.removeAttr("required")
+                }
+                if (paralelo_id) {
+                    paralelo_id.removeAttr("required")
+                }
+                if (select_materia) {
+                    select_materia.removeAttr("required")
+                }
+                contenedor_individual.removeClass("oculto");
+            } else {
+                select_estudiante.removeAttr("required");
+                if (select_grado) {
+                    select_grado.prop("required", true)
+                }
+                if (select_turno) {
+                    select_turno.prop("required", true)
+                }
+                if (paralelo_id) {
+                    paralelo_id.prop("required", true)
+                }
+                if (materia_id) {
+                    materia_id.prop("required", true)
+                }
+                if (select_materia) {
+                    select_materia.prop("required", true)
+                }
+                contenedor_grupal.removeClass("oculto");
+            }
+        }
+    </script>
 @endsection

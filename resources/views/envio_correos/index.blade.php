@@ -35,15 +35,42 @@
                             <table id="example2" class="table data-table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Nº</th>
-                                        <th>Campo</th>
-                                        <th>Nombre</th>
-                                        <th>Área</th>
-                                        <th>Descripción</th>
-                                        <th>Opciones</th>
+                                        <th>Envíado por</th>
+                                        <th>Tipo</th>
+                                        <th>Gestión</th>
+                                        <th>Estudiante</th>
+                                        <th>Nivel</th>
+                                        <th>Grado</th>
+                                        <th>Paralelo</th>
+                                        <th>Materia</th>
+                                        <th>Turno</th>
+                                        <th>Mensaje</th>
+                                        <th>Archivo</th>
+                                        <th>Fecha</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($envio_correos as $value)
+                                        <tr>
+                                            <td>{{ $value->user->name }}</td>
+                                            <td>{{ $value->tipo }}</td>
+                                            <td>{{ $value->gestion }}</td>
+                                            <td>{{ $value->estudiante ? $value->estudiante->full_name : '' }}</td>
+                                            <td>{{ $value->nivel }}</td>
+                                            <td>{{ $value->grado }}</td>
+                                            <td>{{ $value->paralelo->paralelo }}</td>
+                                            <td>{{ $value->materia ? $value->materia->nombre : '' }}</td>
+                                            <td>{{ $value->turno }}</td>
+                                            <td>{!! $value->texto !!}</td>
+                                            <td>
+                                                @if ($value->archivo)
+                                                    <a href="{{ asset('files/' . $value->archivo) }}"
+                                                        target="_blank">Archivo</a>
+                                                @endif
+                                            </td>
+                                            <td>{{ date('d/m/Y', strtotime($value->created_at)) }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -72,6 +99,31 @@
         @if (session('error'))
             mensajeNotificacion('{{ session('error') }}', 'error');
         @endif
+
+        $('table.data-table').DataTable({
+            order: [
+                [0, "desc"]
+            ],
+            columns: [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    width: "10%"
+                },
+            ],
+            scrollCollapse: true,
+            language: lenguaje,
+            pageLength: 25
+        });
     </script>
 @endsection
 @endsection

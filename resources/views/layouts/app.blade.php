@@ -383,7 +383,7 @@
             swal.fire({
                 title: "Error",
                 icon: "error",
-                text: '{{ session('error_swal') }}',
+                html: '{{ session('error_swal') }}',
                 confirmButtonText: "Aceptar",
                 confirmButtonColor: "#bd2130"
             });

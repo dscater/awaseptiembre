@@ -8,6 +8,7 @@ class EnvioCorreo extends Model
 {
     protected $fillable = [
         "tipo",
+        "gestion",
         "estudiante_id",
         "nivel",
         "grado",
@@ -16,6 +17,7 @@ class EnvioCorreo extends Model
         "turno",
         "texto",
         "archivo",
+        "user_id"
     ];
 
     public function estudiante()
@@ -31,5 +33,10 @@ class EnvioCorreo extends Model
     public function materia()
     {
         return $this->belongsTo(Materia::class, 'materia_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

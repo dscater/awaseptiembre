@@ -7,7 +7,7 @@ use App\Estudiante;
 use App\Http\Controllers\UserController;
 use App\Http\Requests\EstudianteStoreRequest;
 use App\Http\Requests\EstudianteUpdateRequest;
-
+use App\Inscripcion;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -119,6 +119,16 @@ class EstudianteController extends Controller
     public function info_tutor(Estudiante $estudiante)
     {
         return view('estudiantes.info_tutor', compact("estudiante"));
+    }
+
+    public function info_tutor_correo(Request $request)
+    {
+        $estudiante = Estudiante::findOrFail($request->id);
+
+        $ultima_inscripcion = Inscripcion::where("estudiante_id", $estudiante->id)
+            ->orderBy("id", "asc")->get()->last();
+        $html = view("estudiantes.parcial.html_info_tutor_correo", compact("estudiante", "ultima_inscripcion"))->render();
+        return response()->JSON($html);
     }
 
     public function formulario(Estudiante $estudiante)

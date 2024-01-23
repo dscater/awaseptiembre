@@ -236,13 +236,14 @@ class InscripcionController extends Controller
 
         $inscripcions = Inscripcion::select("inscripcions.*")
             ->join("calificacions", "calificacions.inscripcion_id", "inscripcions.id")
-            ->where("gestion", $gestion)
-            ->where("nivel", $nivel)
-            ->where("grado", $grado)
-            ->where("paralelo_id", $paralelo_id)
-            ->where("turno", $turno)
+            ->where("inscripcions.gestion", $gestion)
+            ->where("inscripcions.nivel", $nivel)
+            ->where("inscripcions.grado", $grado)
+            ->where("inscripcions.paralelo_id", $paralelo_id)
+            ->where("inscripcions.turno", $turno)
             ->where("inscripcions.status", 1)
             ->where("calificacions.materia_id", $materia_id)
+            ->distinct()
             ->get();
 
         $lista_options = '<option value="">Seleccione...</option>';

@@ -67,7 +67,7 @@ class CalificacionController extends Controller
                 $array_gestiones[$i] = $i;
             }
         } else {
-            $array_gestiones = [date("Y")];
+            $array_gestiones[date("Y")] = [date("Y")];
         }
 
         $profesor = null;

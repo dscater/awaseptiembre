@@ -16,6 +16,7 @@ class CreateEnvioCorreosTable extends Migration
         Schema::create('envio_correos', function (Blueprint $table) {
             $table->id();
             $table->string("tipo");
+            $table->integer("gestion");
             $table->unsignedBigInteger("estudiante_id")->nullable();
             $table->string("nivel", 155)->nullable();
             $table->string("grado", 155)->nullable();
@@ -24,6 +25,7 @@ class CreateEnvioCorreosTable extends Migration
             $table->string("turno")->nullable();
             $table->text("texto");
             $table->string("archivo")->nullable();
+            $table->unsignedBigInteger("user_id");
             $table->timestamps();
         });
     }

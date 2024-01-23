@@ -44,6 +44,13 @@
 </li>
 
 <li class="nav-item">
+    <a href="{{ route('envio_correos.index') }}" class="nav-link {{ request()->is('envio_correos*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-envelope"></i>
+        <p>Envío de correos</p>
+    </a>
+</li>
+
+<li class="nav-item">
     <a href="{{ route('reportes.index') }}" class="nav-link {{ request()->is('reportes*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-chart-pie"></i>
         <p>Reportes</p>

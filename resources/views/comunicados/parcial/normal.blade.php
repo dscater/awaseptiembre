@@ -23,7 +23,7 @@
 <div class="col-md-4">
     <div class="form-group">
         <label>Paralelo*</label>
-        {{ Form::select('paralelo_id', $array_paralelos, null, ['class' => 'form-control', 'required', 'paralelo_id']) }}
+        {{ Form::select('paralelo_id', $array_paralelos, null, ['class' => 'form-control', 'required', 'id' => 'paralelo_id']) }}
         @if ($errors->has('paralelo_id'))
             <span class="invalid-feedback" style="color:rgb(185, 7, 7);display:block" role="alert">
                 <strong>{{ $errors->first('paralelo_id') }}</strong>
@@ -45,7 +45,7 @@
 <div class="col-md-2">
     <div class="form-group">
         <label>Turno*</label>
-        {{ Form::select('turno', ['' => 'Seleccione...', 'MAÑANA' => 'MAÑANA', 'TARDE' => 'TARDE', 'NOCHE' => 'NOCHE'], null, ['class' => 'form-control', 'required']) }}
+        {{ Form::select('turno', ['' => 'Seleccione...', 'MAÑANA' => 'MAÑANA', 'TARDE' => 'TARDE', 'NOCHE' => 'NOCHE'], null, ['class' => 'form-control', 'required', 'id' => 'select_turno']) }}
         @if ($errors->has('turno'))
             <span class="invalid-feedback" style="color:rgb(185, 7, 7);display:block" role="alert">
                 <strong>{{ $errors->first('turno') }}</strong>
