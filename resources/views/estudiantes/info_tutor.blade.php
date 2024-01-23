@@ -45,6 +45,10 @@
                                             <tr>
                                                 <td><strong>Tipo documento: </strong>{{ $estudiante->tipo_doc }}</td>
                                             </tr>
+                                            <tr>
+                                                <td><strong>Correo electrónico:
+                                                    </strong>{{ $estudiante->correo_padre_tutor }}</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -70,6 +74,10 @@
                                             </tr>
                                             <tr>
                                                 <td><strong>C.I.: </strong>{{ $estudiante->ci_madre }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Correo electrónico:
+                                                    </strong>{{ $estudiante->correo_madre }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

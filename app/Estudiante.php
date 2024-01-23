@@ -18,8 +18,10 @@ class Estudiante extends Model
         'banio', 'actividad', 'dias_trabajo', 'recibio_pago', 'internet',
         'frecuencia_internet', 'llega', 'llega_otro', 'desc_llega', 'ci_padre_tutor', 'app_padre_tutor',
         'apm_padre_tutor', 'nom_padre_tutor', 'idioma_padre_tutor', 'ocupacion_padre_tutor', 'grado_padre_tutor',
-        'parentezco_padre_tutor', 'ci_madre', 'app_madre', 'apm_madre', 'nom_madre',
-        'idioma_madre', 'ocupacion_madre', 'grado_madre', 'lugar', 'foto',
+        'parentezco_padre_tutor', 'correo_padre_tutor',
+        'ci_madre', 'app_madre', 'apm_madre', 'nom_madre',
+        'idioma_madre', 'ocupacion_madre', 'grado_madre', 'correo_madre',
+        'lugar', 'foto',
         'fecha_registro', 'user_id', 'estado',
     ];
 

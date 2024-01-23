@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 28-10-2023 a las 23:34:25
+-- Tiempo de generación: 23-01-2024 a las 20:10:11
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 7.4.19
 
@@ -274,6 +274,14 @@ CREATE TABLE `calificacions` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `calificacions`
+--
+
+INSERT INTO `calificacions` (`id`, `inscripcion_id`, `estudiante_id`, `gestion`, `profesor_materia_id`, `materia_id`, `ponderacion`, `descripcion`, `fecha_registro`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 2023, 1, 2, 79.00, 'DESCRIPCION CALIFICACION', '2023-10-28', '2023-10-28 23:41:19', '2023-10-28 23:41:19'),
+(2, 1, 1, 2023, 1, 2, 60.00, 'OTRA CALIFICACION', '2023-10-28', '2023-10-28 23:44:34', '2023-10-28 23:44:34');
+
 -- --------------------------------------------------------
 
 --
@@ -323,6 +331,40 @@ CREATE TABLE `comunicados` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `comunicados`
+--
+
+INSERT INTO `comunicados` (`id`, `user_id`, `gestion`, `nivel`, `grado`, `profesor_materia_id`, `materia_id`, `paralelo_id`, `turno`, `descripcion`, `fecha_inicio`, `fecha_fin`, `estado`, `fecha_registro`, `created_at`, `updated_at`) VALUES
+(1, 6, 2023, 'SECUNDARIA', '1', 1, 2, 3, 'MAÑANA', 'COMUNICADO DESDE USUARIO PROFESOR', '2023-10-28', '2023-10-30', 'VIGENTE', '2023-10-28', '2023-10-28 23:45:09', '2023-10-28 23:45:09'),
+(2, 1, 2023, 'SECUNDARIA', '1', 1, 2, 3, 'MAÑANA', 'COMUNICADO DESDE USUARIO ADMINITRADOR', '2023-10-28', '2023-10-28', 'VIGENTE', '2023-10-28', '2023-10-28 23:45:54', '2023-10-28 23:45:54');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `configuracion_correos`
+--
+
+CREATE TABLE `configuracion_correos` (
+  `id` bigint UNSIGNED NOT NULL,
+  `host` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `puerto` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `encriptado` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `correo` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `driver` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `configuracion_correos`
+--
+
+INSERT INTO `configuracion_correos` (`id`, `host`, `puerto`, `encriptado`, `correo`, `nombre`, `password`, `driver`, `created_at`, `updated_at`) VALUES
+(1, 'smtp.hostinger.com', '587', 'tls', 'ue21septiembre@emsytsrl.com', 'AWASEPTIEMBRE', 'MiClave-123', 'smtp', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -347,6 +389,14 @@ CREATE TABLE `entregas` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `entregas`
+--
+
+INSERT INTO `entregas` (`id`, `user_id`, `inscripcion_id`, `profesor_materia_id`, `materia_id`, `tarea_id`, `observaciones`, `fecha_entrega`, `calificacion`, `estado`, `enviado`, `activo`, `fecha_registro`, `created_at`, `updated_at`) VALUES
+(1, 3, 1, 1, 2, 1, 'WHEN AN UNKNOWN PRINTER TOOK A GALLEY OF TYPE AND SCRAMBLED IT TO MAKE A TYPE SPECIMEN BOOK. IT HAS SURVIVED NOT ONLY FIVE CENTURIES, BUT ALSO THE LEAP INTO ELECTRONIC TYPESETTING, REMAINING ESSENTIALLY UNCHANGED. IT WAS POPULARISED IN THE 1960S WITH THE RELEASE OF LETRASET SHEETS CONTAINING LOREM IPSUM PASSAGES, AND MORE RECENTLY WITH DESKTOP PUBLISHING SOFTWARE LIKE ALDUS PAGEMAKER INCLUDING VERSIONS OF LOREM IPSUM.<br />\r\nWHY DO WE USE IT?<br />\r\nIT IS A LONG ESTABLISHED FACT THAT A READER WILL BE DISTRACTED BY THE READABLE CONTENT OF A PAGE WHEN LOOKING AT ITS LAYOUT. THE POINT OF USING LOREM IPSUM IS THAT IT HAS A MORE-OR-LESS NORMAL DISTRIBUTION OF LETTERS, AS OPPOSED TO USING \'CONTENT HERE, CONTENT HERE\', MAKING IT LOOK LIKE READABLE ENGLISH. MANY DESKTOP PUBLISHING PACKAGES AND WEB PAGE EDITORS NOW USE LOREM IPSUM AS THEIR DEFAULT MODEL TEXT, AND A SEARCH FOR \'LOREM IPSUM\' WILL UNCOVER MANY WEB SITES STILL IN THEIR INFANCY. VARIOUS VERSIONS HAVE EVOLVED OVER THE YEARS, SOMETIMES BY ACCIDENT, SOMETIMES ON PURPOSE (INJECTED HUMOUR AND THE LIKE).', '2023-10-28', 90.00, 'ENTREGADO', 'SI', 1, '2023-10-28', '2023-10-28 23:38:47', '2023-10-28 23:40:58'),
+(2, 12, 2, 1, 2, 1, NULL, NULL, NULL, 'SIN ENTREGAR', 'NO', 0, '2023-10-28', '2023-10-28 23:38:47', '2023-10-28 23:38:47');
+
 -- --------------------------------------------------------
 
 --
@@ -357,6 +407,34 @@ CREATE TABLE `entrega_archivos` (
   `id` bigint UNSIGNED NOT NULL,
   `entrega_id` bigint UNSIGNED NOT NULL,
   `link` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `entrega_archivos`
+--
+
+INSERT INTO `entrega_archivos` (`id`, `entrega_id`, `link`, `created_at`, `updated_at`) VALUES
+(1, 1, 'https://www.facebook.com/', '2023-10-28 23:40:47', '2023-10-28 23:40:47');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `envio_correos`
+--
+
+CREATE TABLE `envio_correos` (
+  `id` bigint UNSIGNED NOT NULL,
+  `tipo` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estudiante_id` bigint UNSIGNED DEFAULT NULL,
+  `nivel` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `grado` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paralelo_id` bigint UNSIGNED DEFAULT NULL,
+  `materia_id` bigint UNSIGNED DEFAULT NULL,
+  `turno` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `texto` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `archivo` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -422,6 +500,7 @@ CREATE TABLE `estudiantes` (
   `ocupacion_padre_tutor` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `grado_padre_tutor` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `parentezco_padre_tutor` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `correo_padre_tutor` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ci_madre` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `app_madre` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `apm_madre` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -429,6 +508,7 @@ CREATE TABLE `estudiantes` (
   `idioma_madre` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ocupacion_madre` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `grado_madre` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `correo_madre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lugar` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `foto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha_registro` date NOT NULL,
@@ -442,10 +522,10 @@ CREATE TABLE `estudiantes` (
 -- Volcado de datos para la tabla `estudiantes`
 --
 
-INSERT INTO `estudiantes` (`id`, `nombre`, `paterno`, `materno`, `tipo_doc`, `nro_doc`, `ci_exp`, `pais_nac`, `dpto_nac`, `provincia_nac`, `localidad_nac`, `fecha_nac`, `sexo`, `oficialia`, `libro`, `partida`, `folio`, `ue_procedencia`, `codigo_sie_ue`, `provincia_dir`, `zona_dir`, `municipio_dir`, `avenida_dir`, `localidad_dir`, `fono_dir`, `nro_dir`, `idioma_niniez`, `idiomas_estudiante`, `pueblo_nacion`, `pueblo_nacion_otro`, `centro_salud`, `veces_centro_salud`, `discapacidad`, `discapacidad_otro`, `desc_discapacidad`, `agua`, `energia_electrica`, `banio`, `actividad`, `dias_trabajo`, `recibio_pago`, `internet`, `frecuencia_internet`, `llega`, `llega_otro`, `desc_llega`, `ci_padre_tutor`, `app_padre_tutor`, `apm_padre_tutor`, `nom_padre_tutor`, `idioma_padre_tutor`, `ocupacion_padre_tutor`, `grado_padre_tutor`, `parentezco_padre_tutor`, `ci_madre`, `app_madre`, `apm_madre`, `nom_madre`, `idioma_madre`, `ocupacion_madre`, `grado_madre`, `lugar`, `foto`, `fecha_registro`, `user_id`, `estado`, `created_at`, `updated_at`) VALUES
-(1, 'DANIEL', 'PAREDES', 'CONDE', 'CI', '405060', 'LP', 'LA PAZ', 'LA PAZ', 'MURILLO', 'LA PAZ', '2004-08-15', 'M', '234', '34', '345', '45', 'UNIDAD EDUCATIVA MARISCAL SANTA CRUZ', '234235234', 'MURILLO', 'ZONA NORTE', 'LA PAZ', 'CALLE 4', 'LA PAZ', '76544875', '868', 'CASTELLANO', 'CASTELLANO', 'NO PERTENECE', '', 'SI', '1 A 2 VECES', '', '', '', 'CAÑERÍA DE RED', 'SI', 'ALCANTARILLADO', 'NO TRABAJÓ', '5', 'NO', 'SU DOMICILIO', 'DIARIAMENTE', 'A PIE', '', 'MENOS DE MEDIA HORA', '708090', 'PAREDES', 'TAPIA', 'RICARDO', 'CASTELLANO', 'PROFESOR', 'LICENCIATURA', 'PADRE', '908070', 'CONDE', 'SUAREZ', 'MARTHA', 'CASTELLANO', 'LABORES DE HOGAR', 'SECUNDARIA', '', 'DANIEL1698515013.png', '2023-09-20', 3, 1, '2023-09-21 00:24:38', '2023-10-28 17:43:33'),
-(2, 'CARLOS', 'GONZALES', 'MARTINES', 'CI', '12312', 'LP', 'BOLIVIA', 'LA PAZ', 'LAPAZ', 'LA PAZ', '2010-01-21', 'M', '123123', '12', '2112', '1212', '', '', 'LOS OLIVOS', 'ZONA VILLA', 'SECCION 1|', 'AV. 3', 'LOCALIDAD 1', '7777', '32', 'ESPAÑOL', 'ESPAÑOL', 'NO PERTENECE', '', 'SI', '1 A 2 VECES', 'SENSORIAL Y DE LA COMUNICACIÓN', '', '', 'CAÑERÍA DE RED', 'SI', 'ALCANTARILLADO', 'TRABAJÓ EN AGRICULTURA O AGROINDUSTRIA', '', '', 'EN LA UNIDAD EDUCATIVA', 'MÁS DE UNA VEZ A LA SEMANA', 'A PIE', '', 'MENOS DE MEDIA HORA', '3123', 'GONZALES', '', 'MARTIN', 'ESPAÑOL', 'OCUPACION', 'SECUNDARIA', '', '', '', '', '', '', '', '', '', 'CARLOS1695303507.jpg', '2023-09-21', 10, 1, '2023-09-21 13:38:27', '2023-09-21 13:38:27'),
-(3, 'MAMANI', 'VALENTINA', 'MENDOZA', 'CI', '33223', 'LP', 'BOLIVIA', 'LA PAZ', 'LA PAZ', 'LA PAZ', '2006-01-01', 'F', '1212', '12223', '324234', '123123', '', '', 'LOS OLIVOS', 'LA PAZ', 'LA PAZ', 'AV. 33', 'LA PAZ', '777777', '3', 'ESPAÑOL', 'ESPAÑOL', 'NO PERTENECE', '', 'SI', '1 A 2 VECES', '', '', '', 'CAÑERÍA DE RED', 'SI', 'ALCANTARILLADO', 'NO TRABAJÓ', '', '', 'SU DOMICILIO', 'DIARIAMENTE', 'A PIE', '', 'MENOS DE MEDIA HORA', '88888', 'MENDOZA', 'MARTINES', 'PEDRO', 'ESPAÑOL', 'OCUPACION 1', 'GRADO ALCANZADO', 'PADRE', '77777', 'MAMANI', 'MAMANI', 'MARIA', 'ESPAÑOL', 'OCUPACION 2', 'GRADO 2', '', 'MAMANI1695305977.jpg', '2023-09-21', 12, 1, '2023-09-21 14:19:38', '2023-09-21 14:19:38');
+INSERT INTO `estudiantes` (`id`, `nombre`, `paterno`, `materno`, `tipo_doc`, `nro_doc`, `ci_exp`, `pais_nac`, `dpto_nac`, `provincia_nac`, `localidad_nac`, `fecha_nac`, `sexo`, `oficialia`, `libro`, `partida`, `folio`, `ue_procedencia`, `codigo_sie_ue`, `provincia_dir`, `zona_dir`, `municipio_dir`, `avenida_dir`, `localidad_dir`, `fono_dir`, `nro_dir`, `idioma_niniez`, `idiomas_estudiante`, `pueblo_nacion`, `pueblo_nacion_otro`, `centro_salud`, `veces_centro_salud`, `discapacidad`, `discapacidad_otro`, `desc_discapacidad`, `agua`, `energia_electrica`, `banio`, `actividad`, `dias_trabajo`, `recibio_pago`, `internet`, `frecuencia_internet`, `llega`, `llega_otro`, `desc_llega`, `ci_padre_tutor`, `app_padre_tutor`, `apm_padre_tutor`, `nom_padre_tutor`, `idioma_padre_tutor`, `ocupacion_padre_tutor`, `grado_padre_tutor`, `parentezco_padre_tutor`, `correo_padre_tutor`, `ci_madre`, `app_madre`, `apm_madre`, `nom_madre`, `idioma_madre`, `ocupacion_madre`, `grado_madre`, `correo_madre`, `lugar`, `foto`, `fecha_registro`, `user_id`, `estado`, `created_at`, `updated_at`) VALUES
+(1, 'DANIEL', 'PAREDES', 'CONDE', 'CI', '405060', 'LP', 'LA PAZ', 'LA PAZ', 'MURILLO', 'LA PAZ', '2004-08-15', 'M', '234', '34', '345', '45', 'UNIDAD EDUCATIVA MARISCAL SANTA CRUZ', '234235234', 'MURILLO', 'ZONA NORTE', 'LA PAZ', 'CALLE 4', 'LA PAZ', '76544875', '868', 'CASTELLANO', 'CASTELLANO', 'NO PERTENECE', '', 'SI', '1 A 2 VECES', '', '', '', 'CAÑERÍA DE RED', 'SI', 'ALCANTARILLADO', 'NO TRABAJÓ', '5', 'NO', 'SU DOMICILIO', 'DIARIAMENTE', 'A PIE', '', 'MENOS DE MEDIA HORA', '708090', 'PAREDES', 'TAPIA', 'RICARDO', 'CASTELLANO', 'PROFESOR', 'LICENCIATURA', 'PADRE', '', '908070', 'CONDE', 'SUAREZ', 'MARTHA', 'CASTELLANO', 'LABORES DE HOGAR', 'SECUNDARIA', NULL, '', 'DANIEL1698515013.png', '2023-09-20', 3, 1, '2023-09-21 00:24:38', '2023-10-28 17:43:33'),
+(2, 'CARLOS', 'GONZALES', 'MARTINES', 'CI', '12312', 'LP', 'BOLIVIA', 'LA PAZ', 'LAPAZ', 'LA PAZ', '2010-01-21', 'M', '123123', '12', '2112', '1212', '', '', 'LOS OLIVOS', 'ZONA VILLA', 'SECCION 1|', 'AV. 3', 'LOCALIDAD 1', '7777', '32', 'ESPAÑOL', 'ESPAÑOL', 'NO PERTENECE', '', 'SI', '1 A 2 VECES', 'SENSORIAL Y DE LA COMUNICACIÓN', '', '', 'CAÑERÍA DE RED', 'SI', 'ALCANTARILLADO', 'TRABAJÓ EN AGRICULTURA O AGROINDUSTRIA', '', '', 'EN LA UNIDAD EDUCATIVA', 'MÁS DE UNA VEZ A LA SEMANA', 'A PIE', '', 'MENOS DE MEDIA HORA', '3123', 'GONZALES', '', 'MARTIN', 'ESPAÑOL', 'OCUPACION', 'SECUNDARIA', '', 'victorgonzalo.as@gmail.com', '', '', '', '', '', '', '', '', '', 'CARLOS1695303507.jpg', '2023-09-21', 10, 1, '2023-09-21 13:38:27', '2024-01-23 19:36:36'),
+(3, 'MAMANI', 'VALENTINA', 'MENDOZA', 'CI', '33223', 'LP', 'BOLIVIA', 'LA PAZ', 'LA PAZ', 'LA PAZ', '2006-01-01', 'F', '1212', '12223', '324234', '123123', '', '', 'LOS OLIVOS', 'LA PAZ', 'LA PAZ', 'AV. 33', 'LA PAZ', '777777', '3', 'ESPAÑOL', 'ESPAÑOL', 'NO PERTENECE', '', 'SI', '1 A 2 VECES', '', '', '', 'CAÑERÍA DE RED', 'SI', 'ALCANTARILLADO', 'NO TRABAJÓ', '', '', 'SU DOMICILIO', 'DIARIAMENTE', 'A PIE', '', 'MENOS DE MEDIA HORA', '88888', 'MENDOZA', 'MARTINES', 'PEDRO', 'ESPAÑOL', 'OCUPACION 1', 'GRADO ALCANZADO', 'PADRE', '', '77777', 'MAMANI', 'MAMANI', 'MARIA', 'ESPAÑOL', 'OCUPACION 2', 'GRADO 2', NULL, '', 'MAMANI1695305977.jpg', '2023-09-21', 12, 1, '2023-09-21 14:19:38', '2023-09-21 14:19:38');
 
 -- --------------------------------------------------------
 
@@ -466,6 +546,21 @@ CREATE TABLE `historial_accions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `historial_accions`
+--
+
+INSERT INTO `historial_accions` (`id`, `user_id`, `accion`, `descripcion`, `datos_original`, `datos_nuevo`, `modulo`, `fecha`, `hora`, `created_at`, `updated_at`) VALUES
+(1, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UNA TAREA', 'id: 1<br/>user_id: 6<br/>materia_id: 2<br/>profesor_materia_id: 1<br/>gestion: 2023<br/>nombre: TAREA #1 MATEMATICAS<br/>descripcion: DESC TAREA #1<br/>fecha_asignacion: 2023-10-28<br/>fecha_limite: 2023-10-30<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 19:38:47<br/>updated_at: 2023-10-28 19:38:47<br/>', NULL, 'TAREAS', '2023-10-28', '19:38:47', '2023-10-28 23:38:47', '2023-10-28 23:38:47'),
+(2, 3, 'MODIFICACIÓN', 'EL USUARIO  REALIZÓ/ACTUALZÓ UNA ENTREGA', 'id: 1<br/>user_id: 3<br/>inscripcion_id: 1<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>tarea_id: 1<br/>observaciones: <br/>fecha_entrega: <br/>calificacion: <br/>estado: SIN ENTREGAR<br/>enviado: NO<br/>activo: 0<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 19:38:47<br/>updated_at: 2023-10-28 19:38:47<br/>', 'id: 1<br/>user_id: 3<br/>inscripcion_id: 1<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>tarea_id: 1<br/>observaciones: WHEN AN UNKNOWN PRINTER TOOK A GALLEY OF TYPE AND SCRAMBLED IT TO MAKE A TYPE SPECIMEN BOOK. IT HAS SURVIVED NOT ONLY FIVE CENTURIES, BUT ALSO THE LEAP INTO ELECTRONIC TYPESETTING, REMAINING ESSENTIALLY UNCHANGED. IT WAS POPULARISED IN THE 1960S WITH THE RELEASE OF LETRASET SHEETS CONTAINING LOREM IPSUM PASSAGES, AND MORE RECENTLY WITH DESKTOP PUBLISHING SOFTWARE LIKE ALDUS PAGEMAKER INCLUDING VERSIONS OF LOREM IPSUM.<br />\r\nWHY DO WE USE IT?<br />\r\nIT IS A LONG ESTABLISHED FACT THAT A READER WILL BE DISTRACTED BY THE READABLE CONTENT OF A PAGE WHEN LOOKING AT ITS LAYOUT. THE POINT OF USING LOREM IPSUM IS THAT IT HAS A MORE-OR-LESS NORMAL DISTRIBUTION OF LETTERS, AS OPPOSED TO USING \'CONTENT HERE, CONTENT HERE\', MAKING IT LOOK LIKE READABLE ENGLISH. MANY DESKTOP PUBLISHING PACKAGES AND WEB PAGE EDITORS NOW USE LOREM IPSUM AS THEIR DEFAULT MODEL TEXT, AND A SEARCH FOR \'LOREM IPSUM\' WILL UNCOVER MANY WEB SITES STILL IN THEIR INFANCY. VARIOUS VERSIONS HAVE EVOLVED OVER THE YEARS, SOMETIMES BY ACCIDENT, SOMETIMES ON PURPOSE (INJECTED HUMOUR AND THE LIKE).<br/>fecha_entrega: 2023-10-28<br/>calificacion: <br/>estado: ENTREGADO<br/>enviado: SI<br/>activo: 1<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 19:38:47<br/>updated_at: 2023-10-28 19:39:36<br/>', 'ENTREGAS', '2023-10-28', '19:39:36', '2023-10-28 23:39:36', '2023-10-28 23:39:36'),
+(3, 3, 'MODIFICACIÓN', 'EL USUARIO  REALIZÓ/ACTUALZÓ UNA ENTREGA', 'id: 1<br/>user_id: 3<br/>inscripcion_id: 1<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>tarea_id: 1<br/>observaciones: WHEN AN UNKNOWN PRINTER TOOK A GALLEY OF TYPE AND SCRAMBLED IT TO MAKE A TYPE SPECIMEN BOOK. IT HAS SURVIVED NOT ONLY FIVE CENTURIES, BUT ALSO THE LEAP INTO ELECTRONIC TYPESETTING, REMAINING ESSENTIALLY UNCHANGED. IT WAS POPULARISED IN THE 1960S WITH THE RELEASE OF LETRASET SHEETS CONTAINING LOREM IPSUM PASSAGES, AND MORE RECENTLY WITH DESKTOP PUBLISHING SOFTWARE LIKE ALDUS PAGEMAKER INCLUDING VERSIONS OF LOREM IPSUM.<br />\r\nWHY DO WE USE IT?<br />\r\nIT IS A LONG ESTABLISHED FACT THAT A READER WILL BE DISTRACTED BY THE READABLE CONTENT OF A PAGE WHEN LOOKING AT ITS LAYOUT. THE POINT OF USING LOREM IPSUM IS THAT IT HAS A MORE-OR-LESS NORMAL DISTRIBUTION OF LETTERS, AS OPPOSED TO USING \'CONTENT HERE, CONTENT HERE\', MAKING IT LOOK LIKE READABLE ENGLISH. MANY DESKTOP PUBLISHING PACKAGES AND WEB PAGE EDITORS NOW USE LOREM IPSUM AS THEIR DEFAULT MODEL TEXT, AND A SEARCH FOR \'LOREM IPSUM\' WILL UNCOVER MANY WEB SITES STILL IN THEIR INFANCY. VARIOUS VERSIONS HAVE EVOLVED OVER THE YEARS, SOMETIMES BY ACCIDENT, SOMETIMES ON PURPOSE (INJECTED HUMOUR AND THE LIKE).<br/>fecha_entrega: 2023-10-28<br/>calificacion: <br/>estado: ENTREGADO<br/>enviado: SI<br/>activo: 1<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 19:38:47<br/>updated_at: 2023-10-28 19:39:36<br/>', 'id: 1<br/>user_id: 3<br/>inscripcion_id: 1<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>tarea_id: 1<br/>observaciones: WHEN AN UNKNOWN PRINTER TOOK A GALLEY OF TYPE AND SCRAMBLED IT TO MAKE A TYPE SPECIMEN BOOK. IT HAS SURVIVED NOT ONLY FIVE CENTURIES, BUT ALSO THE LEAP INTO ELECTRONIC TYPESETTING, REMAINING ESSENTIALLY UNCHANGED. IT WAS POPULARISED IN THE 1960S WITH THE RELEASE OF LETRASET SHEETS CONTAINING LOREM IPSUM PASSAGES, AND MORE RECENTLY WITH DESKTOP PUBLISHING SOFTWARE LIKE ALDUS PAGEMAKER INCLUDING VERSIONS OF LOREM IPSUM.<br />\r\nWHY DO WE USE IT?<br />\r\nIT IS A LONG ESTABLISHED FACT THAT A READER WILL BE DISTRACTED BY THE READABLE CONTENT OF A PAGE WHEN LOOKING AT ITS LAYOUT. THE POINT OF USING LOREM IPSUM IS THAT IT HAS A MORE-OR-LESS NORMAL DISTRIBUTION OF LETTERS, AS OPPOSED TO USING \'CONTENT HERE, CONTENT HERE\', MAKING IT LOOK LIKE READABLE ENGLISH. MANY DESKTOP PUBLISHING PACKAGES AND WEB PAGE EDITORS NOW USE LOREM IPSUM AS THEIR DEFAULT MODEL TEXT, AND A SEARCH FOR \'LOREM IPSUM\' WILL UNCOVER MANY WEB SITES STILL IN THEIR INFANCY. VARIOUS VERSIONS HAVE EVOLVED OVER THE YEARS, SOMETIMES BY ACCIDENT, SOMETIMES ON PURPOSE (INJECTED HUMOUR AND THE LIKE).<br/>fecha_entrega: 2023-10-28<br/>calificacion: <br/>estado: ENTREGADO<br/>enviado: SI<br/>activo: 1<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 19:38:47<br/>updated_at: 2023-10-28 19:40:47<br/>', 'ENTREGAS', '2023-10-28', '19:40:47', '2023-10-28 23:40:47', '2023-10-28 23:40:47'),
+(4, 6, 'MODIFICACIÓN', 'EL USUARIO  REGISTRO LA CALIFICACIÓN DE UNA ENTREGA', 'id: 1<br/>user_id: 3<br/>inscripcion_id: 1<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>tarea_id: 1<br/>observaciones: WHEN AN UNKNOWN PRINTER TOOK A GALLEY OF TYPE AND SCRAMBLED IT TO MAKE A TYPE SPECIMEN BOOK. IT HAS SURVIVED NOT ONLY FIVE CENTURIES, BUT ALSO THE LEAP INTO ELECTRONIC TYPESETTING, REMAINING ESSENTIALLY UNCHANGED. IT WAS POPULARISED IN THE 1960S WITH THE RELEASE OF LETRASET SHEETS CONTAINING LOREM IPSUM PASSAGES, AND MORE RECENTLY WITH DESKTOP PUBLISHING SOFTWARE LIKE ALDUS PAGEMAKER INCLUDING VERSIONS OF LOREM IPSUM.<br />\r\nWHY DO WE USE IT?<br />\r\nIT IS A LONG ESTABLISHED FACT THAT A READER WILL BE DISTRACTED BY THE READABLE CONTENT OF A PAGE WHEN LOOKING AT ITS LAYOUT. THE POINT OF USING LOREM IPSUM IS THAT IT HAS A MORE-OR-LESS NORMAL DISTRIBUTION OF LETTERS, AS OPPOSED TO USING \'CONTENT HERE, CONTENT HERE\', MAKING IT LOOK LIKE READABLE ENGLISH. MANY DESKTOP PUBLISHING PACKAGES AND WEB PAGE EDITORS NOW USE LOREM IPSUM AS THEIR DEFAULT MODEL TEXT, AND A SEARCH FOR \'LOREM IPSUM\' WILL UNCOVER MANY WEB SITES STILL IN THEIR INFANCY. VARIOUS VERSIONS HAVE EVOLVED OVER THE YEARS, SOMETIMES BY ACCIDENT, SOMETIMES ON PURPOSE (INJECTED HUMOUR AND THE LIKE).<br/>fecha_entrega: 2023-10-28<br/>calificacion: <br/>estado: ENTREGADO<br/>enviado: SI<br/>activo: 1<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 19:38:47<br/>updated_at: 2023-10-28 19:40:47<br/>', 'id: 1<br/>user_id: 3<br/>inscripcion_id: 1<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>tarea_id: 1<br/>observaciones: WHEN AN UNKNOWN PRINTER TOOK A GALLEY OF TYPE AND SCRAMBLED IT TO MAKE A TYPE SPECIMEN BOOK. IT HAS SURVIVED NOT ONLY FIVE CENTURIES, BUT ALSO THE LEAP INTO ELECTRONIC TYPESETTING, REMAINING ESSENTIALLY UNCHANGED. IT WAS POPULARISED IN THE 1960S WITH THE RELEASE OF LETRASET SHEETS CONTAINING LOREM IPSUM PASSAGES, AND MORE RECENTLY WITH DESKTOP PUBLISHING SOFTWARE LIKE ALDUS PAGEMAKER INCLUDING VERSIONS OF LOREM IPSUM.<br />\r\nWHY DO WE USE IT?<br />\r\nIT IS A LONG ESTABLISHED FACT THAT A READER WILL BE DISTRACTED BY THE READABLE CONTENT OF A PAGE WHEN LOOKING AT ITS LAYOUT. THE POINT OF USING LOREM IPSUM IS THAT IT HAS A MORE-OR-LESS NORMAL DISTRIBUTION OF LETTERS, AS OPPOSED TO USING \'CONTENT HERE, CONTENT HERE\', MAKING IT LOOK LIKE READABLE ENGLISH. MANY DESKTOP PUBLISHING PACKAGES AND WEB PAGE EDITORS NOW USE LOREM IPSUM AS THEIR DEFAULT MODEL TEXT, AND A SEARCH FOR \'LOREM IPSUM\' WILL UNCOVER MANY WEB SITES STILL IN THEIR INFANCY. VARIOUS VERSIONS HAVE EVOLVED OVER THE YEARS, SOMETIMES BY ACCIDENT, SOMETIMES ON PURPOSE (INJECTED HUMOUR AND THE LIKE).<br/>fecha_entrega: 2023-10-28<br/>calificacion: 90<br/>estado: ENTREGADO<br/>enviado: SI<br/>activo: 1<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 19:38:47<br/>updated_at: 2023-10-28 19:40:58<br/>', 'ENTREGAS', '2023-10-28', '19:40:58', '2023-10-28 23:40:58', '2023-10-28 23:40:58'),
+(5, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UNA CALIFICACIÓN', 'id: 1<br/>inscripcion_id: 1<br/>estudiante_id: 1<br/>gestion: 2023<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>ponderacion: 79<br/>descripcion: DESCRIPCION CALIFICACION<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 19:41:19<br/>updated_at: 2023-10-28 19:41:19<br/>', NULL, 'CALIFICACIONES', '2023-10-28', '19:41:19', '2023-10-28 23:41:19', '2023-10-28 23:41:19'),
+(6, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UNA CALIFICACIÓN', 'id: 2<br/>inscripcion_id: 1<br/>estudiante_id: 1<br/>gestion: 2023<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>ponderacion: 60<br/>descripcion: OTRA CALIFICACION<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 19:44:34<br/>updated_at: 2023-10-28 19:44:34<br/>', NULL, 'CALIFICACIONES', '2023-10-28', '19:44:34', '2023-10-28 23:44:34', '2023-10-28 23:44:34'),
+(7, 6, 'CREACIÓN', 'EL USUARIO  REGISTRO UN COMUNICADO', 'id: 1<br/>user_id: 6<br/>gestion: 2023<br/>nivel: SECUNDARIA<br/>grado: 1<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>paralelo_id: 3<br/>turno: MAÑANA<br/>descripcion: COMUNICADO DESDE USUARIO PROFESOR<br/>fecha_inicio: 2023-10-28<br/>fecha_fin: 2023-10-30<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 19:45:09<br/>updated_at: 2023-10-28 19:45:09<br/>', NULL, 'COMUNICADOS', '2023-10-28', '19:45:09', '2023-10-28 23:45:09', '2023-10-28 23:45:09'),
+(8, 1, 'CREACIÓN', 'EL USUARIO  REGISTRO UN COMUNICADO', 'id: 2<br/>user_id: 1<br/>gestion: 2023<br/>nivel: SECUNDARIA<br/>grado: 1<br/>profesor_materia_id: 1<br/>materia_id: 2<br/>paralelo_id: 3<br/>turno: MAÑANA<br/>descripcion: COMUNICADO DESDE USUARIO ADMINITRADOR<br/>fecha_inicio: 2023-10-28<br/>fecha_fin: 2023-10-28<br/>estado: VIGENTE<br/>fecha_registro: 2023-10-28<br/>created_at: 2023-10-28 19:45:54<br/>updated_at: 2023-10-28 19:45:54<br/>', NULL, 'COMUNICADOS', '2023-10-28', '19:45:54', '2023-10-28 23:45:54', '2023-10-28 23:45:54'),
+(9, 1, 'MODIFICACIÓN', 'EL USUARIO  MODIFICÓ UNA INSCRIPCIÓN', 'id: 2<br/>estudiante_id: 3<br/>nivel: SECUNDARIA<br/>grado: 1<br/>paralelo_id: 3<br/>turno: MAÑANA<br/>gestion: 2023<br/>estado: REPROBADO<br/>status: 1<br/>fecha_registro: 2023-09-21<br/>created_at: 2023-09-21 10:22:04<br/>updated_at: 2023-09-21 10:22:04<br/>', 'id: 2<br/>estudiante_id: 3<br/>nivel: SECUNDARIA<br/>grado: 1<br/>paralelo_id: 3<br/>turno: MAÑANA<br/>gestion: 2023<br/>estado: REPROBADO<br/>status: 1<br/>fecha_registro: 2023-09-21<br/>created_at: 2023-09-21 10:22:04<br/>updated_at: 2023-09-21 10:22:04<br/>', 'INSCRIPCIONES/CANTIDAD ESTUDIANTES', '2023-10-28', '19:47:37', '2023-10-28 23:47:37', '2023-10-28 23:47:37');
 
 -- --------------------------------------------------------
 
@@ -609,7 +704,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2023_10_27_133633_create_comunicados_table', 5),
 (6, '2023_10_27_133641_create_notificacions_table', 6),
 (7, '2023_10_27_133712_create_notificacion_users_table', 7),
-(8, '2023_08_26_190801_create_historial_accions_table', 8);
+(8, '2023_08_26_190801_create_historial_accions_table', 8),
+(9, '2024_01_23_153737_create_configuracion_correos_table', 9),
+(10, '2024_01_23_154558_create_envio_correos_table', 10);
 
 -- --------------------------------------------------------
 
@@ -626,6 +723,18 @@ CREATE TABLE `notificacions` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `notificacions`
+--
+
+INSERT INTO `notificacions` (`id`, `registro_id`, `modulo`, `descripcion`, `created_at`, `updated_at`) VALUES
+(1, 1, 'tarea', 'SE ASIGNÓ UNA TAREA EN LA MATERIA DE MATEMÁTICAS', '2023-10-28 23:38:47', '2023-10-28 23:38:47'),
+(2, 1, 'entrega', 'SE REGISTRO UNA ENTREGA DE LA TAREA TAREA #1 MATEMATICAS', '2023-10-28 23:39:36', '2023-10-28 23:39:36'),
+(3, 1, 'calificacion', 'SE REGISTRO UNA CALIFICACIÓN EN LA MATERIA DE MATEMÁTICAS', '2023-10-28 23:41:19', '2023-10-28 23:41:19'),
+(4, 2, 'calificacion', 'SE REGISTRO UNA CALIFICACIÓN EN LA MATERIA DE MATEMÁTICAS', '2023-10-28 23:44:34', '2023-10-28 23:44:34'),
+(5, 1, 'comunicado', 'COMUNICADO DE LA MATERIA DE MATEMÁTICAS', '2023-10-28 23:45:09', '2023-10-28 23:45:09'),
+(6, 2, 'comunicado', 'COMUNICADO DE LA MATERIA DE MATEMÁTICAS', '2023-10-28 23:45:54', '2023-10-28 23:45:54');
+
 -- --------------------------------------------------------
 
 --
@@ -640,6 +749,21 @@ CREATE TABLE `notificacion_users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `notificacion_users`
+--
+
+INSERT INTO `notificacion_users` (`id`, `notificacion_id`, `user_id`, `visto`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, 1, '2023-10-28 23:38:47', '2023-10-28 23:38:52'),
+(2, 1, 12, 0, '2023-10-28 23:38:47', '2023-10-28 23:38:47'),
+(3, 2, 6, 1, '2023-10-28 23:39:36', '2023-10-28 23:39:43'),
+(4, 3, 3, 1, '2023-10-28 23:41:19', '2023-10-28 23:44:42'),
+(5, 4, 3, 1, '2023-10-28 23:44:34', '2023-10-28 23:44:38'),
+(6, 5, 3, 1, '2023-10-28 23:45:09', '2023-10-28 23:45:14'),
+(7, 5, 12, 0, '2023-10-28 23:45:09', '2023-10-28 23:45:09'),
+(8, 6, 3, 1, '2023-10-28 23:45:54', '2023-10-28 23:45:57'),
+(9, 6, 12, 0, '2023-10-28 23:45:54', '2023-10-28 23:45:54');
 
 -- --------------------------------------------------------
 
@@ -926,6 +1050,13 @@ CREATE TABLE `tareas` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `tareas`
+--
+
+INSERT INTO `tareas` (`id`, `user_id`, `materia_id`, `profesor_materia_id`, `gestion`, `nombre`, `descripcion`, `fecha_asignacion`, `fecha_limite`, `estado`, `fecha_registro`, `created_at`, `updated_at`) VALUES
+(1, 6, 2, 1, 2023, 'TAREA #1 MATEMATICAS', 'DESC TAREA #1', '2023-10-28', '2023-10-30', 'VIGENTE', '2023-10-28', '2023-10-28 23:38:47', '2023-10-28 23:38:47');
+
 -- --------------------------------------------------------
 
 --
@@ -939,6 +1070,13 @@ CREATE TABLE `tarea_archivos` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `tarea_archivos`
+--
+
+INSERT INTO `tarea_archivos` (`id`, `tarea_id`, `link`, `created_at`, `updated_at`) VALUES
+(1, 1, 'https://www.youtube.com/', '2023-10-28 23:38:47', '2023-10-28 23:38:47');
 
 -- --------------------------------------------------------
 
@@ -1044,6 +1182,12 @@ ALTER TABLE `comunicados`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `configuracion_correos`
+--
+ALTER TABLE `configuracion_correos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `entregas`
 --
 ALTER TABLE `entregas`
@@ -1055,6 +1199,12 @@ ALTER TABLE `entregas`
 ALTER TABLE `entrega_archivos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `entrega_archivos_entrega_id_foreign` (`entrega_id`);
+
+--
+-- Indices de la tabla `envio_correos`
+--
+ALTER TABLE `envio_correos`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `estudiantes`
@@ -1235,7 +1385,7 @@ ALTER TABLE `areas`
 -- AUTO_INCREMENT de la tabla `calificacions`
 --
 ALTER TABLE `calificacions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `campos`
@@ -1247,18 +1397,30 @@ ALTER TABLE `campos`
 -- AUTO_INCREMENT de la tabla `comunicados`
 --
 ALTER TABLE `comunicados`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `configuracion_correos`
+--
+ALTER TABLE `configuracion_correos`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `entregas`
 --
 ALTER TABLE `entregas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `entrega_archivos`
 --
 ALTER TABLE `entrega_archivos`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `envio_correos`
+--
+ALTER TABLE `envio_correos`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -1271,7 +1433,7 @@ ALTER TABLE `estudiantes`
 -- AUTO_INCREMENT de la tabla `historial_accions`
 --
 ALTER TABLE `historial_accions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripcions`
@@ -1295,19 +1457,19 @@ ALTER TABLE `materia_grados`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `notificacions`
 --
 ALTER TABLE `notificacions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `notificacion_users`
 --
 ALTER TABLE `notificacion_users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `paralelos`
@@ -1361,13 +1523,13 @@ ALTER TABLE `razon_socials`
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `tarea_archivos`
 --
 ALTER TABLE `tarea_archivos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `users`

@@ -210,6 +210,9 @@ Route::middleware(['auth'])->group(function () {
     // COMUNICADOS
     Route::resource("comunicados", "ComunicadoController");
 
+    // ENVIO DE CORREOS
+    Route::resource("envio_correos", "EnvioCorreoController");
+
     // NOTIFICACIONES
     Route::resource("notificacions", "NotificacionController");
 

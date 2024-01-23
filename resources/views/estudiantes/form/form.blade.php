@@ -556,6 +556,12 @@
                         {{ Form::text('parentezco_padre_tutor', null, ['class' => 'form-control', 'placeholder' => 'En caso de tutor(a) ¿Cuál es el parentesco?']) }}
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Correo electrónico*:</label>
+                        {{ Form::text('correo_padre_tutor', null, ['class' => 'form-control', 'placeholder' => 'Correo electrónico', 'required']) }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -603,6 +609,12 @@
                     <div class="form-group">
                         <label>Mayor grado de instrucción alcanzado:</label>
                         {{ Form::text('grado_madre', null, ['class' => 'form-control', 'placeholder' => 'Mayor grado de instrucción alcanzado']) }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Correo electrónico:</label>
+                        {{ Form::text('correo_madre', null, ['class' => 'form-control', 'placeholder' => 'Correo electrónico']) }}
                     </div>
                 </div>
             </div>
