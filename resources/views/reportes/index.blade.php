@@ -70,6 +70,7 @@
     @include('reportes.modal.m_notificacions')
     @include('reportes.modal.m_calificaciones')
     @include('reportes.modal.m_comunicados')
+    @include('reportes.modal.m_est_ap_rep')
     
 @endsection
 

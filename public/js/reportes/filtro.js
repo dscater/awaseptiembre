@@ -10,6 +10,18 @@ var grados_inicial = `<option value="">Seleccione...</option>
 <option value="1">1º</option>
 <option value="2">2º</option>`;
 
+var grados2 = `<option value="todos">TODOS</option>
+<option value="1">1º</option>
+<option value="2">2º</option>
+<option value="3">3º</option>
+<option value="4">4º</option>
+<option value="5">5º</option>
+<option value="6">6º</option>`;
+
+var grados_inicial2 = `<option value="todos">TODOS</option>
+<option value="1">1º</option>
+<option value="2">2º</option>`;
+
 $(document).ready(function () {
     usuarios();
     personal();
@@ -23,6 +35,7 @@ $(document).ready(function () {
     desempeno_academico();
     notificacions();
     comunicados();
+    est_ap_rep();
 });
 
 function usuarios() {
@@ -365,6 +378,39 @@ function ingresos_economicos() {
                 fecha_ini.show();
                 fecha_fin.show();
                 break;
+        }
+    });
+}
+
+function est_ap_rep() {
+    var estudiante = $("#m_est_ap_rep #estudiante").parents(".form-group");
+    var nivel = $("#m_est_ap_rep #nivel").parents(".form-group");
+    var grado = $("#m_est_ap_rep #grado").parents(".form-group");
+    var paralelo = $("#m_est_ap_rep #paralelo").parents(".form-group");
+    var turno = $("#m_est_ap_rep #turno").parents(".form-group");
+    var gestion = $("#m_est_ap_rep #gestion").parents(".form-group");
+
+    let valor = nivel.find("select").val();
+    if (valor != "NIVEL INICIAL") {
+        grado.find("select").html(grados2);
+    } else {
+        grado.find("select").html(grados_inicial2);
+    }
+    $("#m_est_ap_rep select#grado").change(function () {
+        if ($("#m_est_ap_rep #grado").val() != "") {
+            // $.ajax({
+            //     type: "GET",
+            //     url: $("#getMateriasFiltro").val(),
+            //     data: {
+            //         grado: $("#m_est_ap_rep #grado").val(),
+            //     },
+            //     dataType: "json",
+            //     success: function (response) {
+            //         $("#m_est_ap_rep select#materia").html(response);
+            //     },
+            // });
+        } else {
+            $("#m_est_ap_rep select#materia").html("");
         }
     });
 }

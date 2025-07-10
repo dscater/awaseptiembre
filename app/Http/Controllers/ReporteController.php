@@ -78,6 +78,11 @@ class ReporteController extends Controller
             $array_paralelos[$value->id] = $value->paralelo;
         }
 
+        $array_paralelos2['todos'] = 'TODOS';
+        foreach ($paralelos as $value) {
+            $array_paralelos2[$value->id] = $value->paralelo;
+        }
+
         $estudiantes = Estudiante::select('estudiantes.*')
             ->where('estudiantes.estado', 1)
             ->get();
@@ -98,7 +103,7 @@ class ReporteController extends Controller
             }
         }
 
-        return view('reportes.index', compact('usuarios', 'array_gestiones', 'array_gestiones_insc', 'array_personal', 'array_paralelos', 'array_estudiantes', 'array_profesors'));
+        return view('reportes.index', compact('usuarios', 'array_gestiones', 'array_gestiones_insc', 'array_personal', 'array_paralelos', 'array_paralelos2', 'array_estudiantes', 'array_profesors'));
     }
 
     public function usuarios(Request $request)
@@ -466,7 +471,6 @@ class ReporteController extends Controller
         return $pdf->stream('comunicados.pdf');
     }
 
-
     public function grafico_inscripcions()
     {
         $usuarios = Administrativo::select('administrativos.*')
@@ -695,5 +699,47 @@ class ReporteController extends Controller
             "datos" => $datos,
             "estudiante" => $inscripcion->estudiante
         ]);
+    }
+
+    public function est_ap_rep(Request $request)
+    {
+        $filtro = $request->filtro;
+        $nivel = $request->nivel;
+        $grado = $request->grado;
+        $paralelo = $request->paralelo;
+        $turno = $request->turno;
+        $gestion = $request->gestion;
+
+        $inscripcions = Inscripcion::select("inscripcions.*");
+
+        if ($filtro != 'todos') {
+            $inscripcions->where("estado", $filtro);
+        }
+
+        if ($grado != 'todos') {
+            $inscripcions->where("grado", $grado);
+        }
+
+        if ($paralelo != 'todos') {
+            $inscripcions->where("paralelo_id", $paralelo);
+        }
+
+        if ($turno != 'todos') {
+            $inscripcions->where("turno", $turno);
+        }
+        $inscripcions = $inscripcions->where("nivel", $nivel)
+            ->where("gestion", $gestion)
+            ->where("status", 1)
+            ->get();
+        $pdf = PDF::loadView('reportes.est_ap_rep', compact('inscripcions', 'gestion'))->setPaper('letter', 'portrait');
+        // ENUMERAR LAS PÁGINAS USANDO CANVAS
+        $pdf->output();
+        $dom_pdf = $pdf->getDomPDF();
+        $canvas = $dom_pdf->get_canvas();
+        $alto = $canvas->get_height();
+        $ancho = $canvas->get_width();
+        $canvas->page_text($ancho - 90, $alto - 25, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0, 0, 0));
+
+        return $pdf->stream('calificaciones.pdf');
     }
 }

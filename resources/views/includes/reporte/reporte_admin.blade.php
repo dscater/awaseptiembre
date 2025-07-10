@@ -54,3 +54,9 @@
         <a href="#" data-toggle="modal" data-target="#m_comunicados" class="btn btn-info">Comunicados</a>
     </div>
 </div>
+
+<div class="col-md-4">
+    <div class="boton_reporte">
+        <a href="#" data-toggle="modal" data-target="#m_est_ap_rep" class="btn btn-info">Lista de Estudiantes Aprobados y Reprobados</a>
+    </div>
+</div>

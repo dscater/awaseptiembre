@@ -265,5 +265,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('reportes/grafico_tareas_datos', 'ReporteController@grafico_tareas_datos')->name('reportes.grafico_tareas_datos');
 
     Route::get('reportes/calificaciones', 'ReporteController@calificaciones')->name('reportes.calificaciones');
+
+    Route::get('reportes/est_ap_rep', 'ReporteController@est_ap_rep')->name('reportes.est_ap_rep');    
+
     Route::get('reportes/comunicados', 'ReporteController@comunicados')->name('reportes.comunicados');
 });
